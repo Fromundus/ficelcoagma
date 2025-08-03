@@ -12,6 +12,7 @@ import pushToast from '../../lib/toast'
 type Errors = {
   name?: string;
   email?: string;
+  role?:string;
   password?: string;
 }
 
@@ -21,6 +22,7 @@ const AccountSettings = () => {
   const [userAccount, setUserAccount] = React.useState<User>({
     name: user?.name ?? "",
     email: user?.email ?? "",
+    role: user?.role ?? "",
     password: "",
     password_confirmation: "",
   });
@@ -28,6 +30,7 @@ const AccountSettings = () => {
   const [errors, setErrors] = React.useState<Errors>({
     name: "",
     email: "",
+    role: "",
     password: "",
   });
 

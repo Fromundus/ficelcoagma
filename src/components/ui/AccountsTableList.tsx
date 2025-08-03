@@ -3,7 +3,7 @@ import Button from './Button';
 // import { useNavigate } from 'react-router-dom';
 import { IoAdd, IoClose, IoTrash } from 'react-icons/io5';
 import api from '../../api/axios';
-// import { HiOutlineDotsHorizontal } from 'react-icons/hi';
+import { HiOutlineDotsHorizontal } from 'react-icons/hi';
 import AdminPage from './AdminPage';
 import { Input } from './Input';
 // import { FaFileCsv, FaFileExcel, FaFilePdf } from 'react-icons/fa6';
@@ -47,7 +47,7 @@ const AccountsTableList: React.FC<TableListProps> = ({ onRefresh }) => {
   const [loading, setLoading] = useState(false);
   const [list, setList] = useState<User[]>([]);
   const [selectedItems, setSelectedItems] = useState<(number | undefined)[]>([]);
-  // const [openDropdownId, setOpenDropdownId] = useState<number | null>();
+  const [openDropdownId, setOpenDropdownId] = useState<number | null>();
   const [currentPage, setCurrentPage] = useState(1);
   const [lastPage, setLastPage] = useState(1);
   const [search, setSearch] = useState('');
@@ -100,12 +100,14 @@ const AccountsTableList: React.FC<TableListProps> = ({ onRefresh }) => {
   }, [currentPage, search]);
 
   const toggleSelect = (id: number | undefined) => {
+    setOpenDropdownId(null);
     setSelectedItems(prev =>
       prev.includes(id) ? prev.filter(i => i !== id) : [...prev, id]
     );
   };
 
   const toggleSelectAll = () => {
+    setOpenDropdownId(null);
     if (selectedItems.length === list.length) {
       setSelectedItems([]);
     } else {
@@ -123,9 +125,9 @@ const AccountsTableList: React.FC<TableListProps> = ({ onRefresh }) => {
     }
   };
 
-  // const toggleDropdown = (id: number | undefined) => {
-  //   setOpenDropdownId(prev => (prev === id ? null : id));
-  // };
+  const toggleDropdown = (id: number | undefined) => {
+    setOpenDropdownId(prev => (prev === id ? null : id));
+  };
 
   // const handleAction = (type: string, member: User) => {
   //   if (type === 'edit') {
@@ -250,6 +252,7 @@ const AccountsTableList: React.FC<TableListProps> = ({ onRefresh }) => {
                   disabled={loading}
                   error={errors?.name}
                 />
+
                 <Select
                   id='role'
                   name='role'
@@ -315,7 +318,7 @@ const AccountsTableList: React.FC<TableListProps> = ({ onRefresh }) => {
               <td className="px-2 py-4 text-left text-xs font-medium uppercase">Name</td>
               <td className="px-2 py-4 text-left text-xs font-medium uppercase">Role</td>
               <td className="px-2 py-4 text-left text-xs font-medium uppercase">Status</td>
-              {/* <td className="px-2 py-4 text-left text-xs font-medium uppercase">Action</td> */}
+              <td className="px-2 py-4 text-left text-xs font-medium uppercase">Action</td>
             </tr>
           </thead>
           <tbody className='text-xs'>
@@ -332,7 +335,7 @@ const AccountsTableList: React.FC<TableListProps> = ({ onRefresh }) => {
                 <td className="px-2 py-4 text-xs">{item.name}</td>
                 <td className="px-2 py-4 text-xs">{item.role}</td>
                 <td className="px-2 py-4 text-xs">{item.status}</td>
-                {/* <td className="px-2 py-4 relative">
+                <td className="px-2 py-4 relative">
                   <button
                     onClick={() => toggleDropdown(item.id)}
                     className="p-1 hover:bg-gray-200 rounded-full"
@@ -341,15 +344,16 @@ const AccountsTableList: React.FC<TableListProps> = ({ onRefresh }) => {
                   </button>
                   {openDropdownId === item.id && (
                     <div className="absolute right-2 mt-2 w-28 bg-white border rounded-md shadow-md z-10">
-                      <button
+                      {/* <button
                         onClick={() => handleAction('edit', item)}
                         className="w-full text-left px-4 py-2 hover:bg-gray-100"
                       >
                         Edit
-                      </button>
+                      </button> */}
+                        <Edit user={item} fetchData={fetchData} setOpenDropdownId={setOpenDropdownId} />
                     </div>
                   )}
-                </td> */}
+                </td>
               </tr>
             ))}
             {list.length === 0 && (
@@ -387,3 +391,86 @@ const AccountsTableList: React.FC<TableListProps> = ({ onRefresh }) => {
 };
 
 export default AccountsTableList;
+
+const Edit = ({user, fetchData, setOpenDropdownId}: {user: User, fetchData: () => void, setOpenDropdownId: React.Dispatch<React.SetStateAction<number | null | undefined>>}) => {
+  const [loading, setLoading] = React.useState<boolean>(false);
+  const [newUser, setNewUser] = React.useState<User>({
+    name: user.name ?? "",
+    role: user.role ?? "",
+  });
+
+  const [errors, setErrors] = React.useState<Errors | null>({
+    name: "",
+    role: "",
+  });
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement> | React.ChangeEvent<HTMLSelectElement>) => {
+    const { name, value } = e.target;
+    setErrors(null);
+
+    setNewUser((prev) => {
+      return {
+        ...prev,
+        [name]: value
+      }
+    })
+  }
+
+  const handleUpdateAccount = async () => {
+    setErrors(null);
+    setLoading(true);
+
+    try {
+      const res = await api.put(`/updateuser/${user.id}`, newUser);
+      console.log(res);
+      pushToast("Created Successfully");
+      fetchData();
+      setLoading(false);
+      setOpenDropdownId(null);
+    } catch (err: any) {
+      console.log(err);
+      setLoading(false);
+      setErrors(err.response.data.errors);
+    }
+  };
+
+  return (
+    <Modal title={`Update ${user.name}`} buttonClassName='border-0 hover:bg-gray-100 w-full text-xs font-normal h-8' label={"Edit"}>
+      <div className='flex flex-col gap-4'>
+        <Input 
+          id='name'
+          name='name'
+          label='Username'
+          placeholder='Username'
+          onChange={handleChange}
+          value={newUser.name}
+          loading={loading}
+          disabled={loading}
+          error={errors?.name}
+        />
+        
+        <Select
+          id='role'
+          name='role'
+          label='Role'
+          placeholder='Please Select a Role'
+          options={roleOptions} 
+          onChange={handleChange} 
+          value={newUser.role}
+          loading={loading}
+          disabled={loading}
+          error={errors?.role}
+        />
+
+        <Button
+          className='bg-primary text-white'
+          onClick={handleUpdateAccount}
+          disabled={loading || !newUser.name || !newUser.role}
+          loading={loading}
+        >
+          Update
+        </Button>
+      </div>
+    </Modal>
+  )
+}
