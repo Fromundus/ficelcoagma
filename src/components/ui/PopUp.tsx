@@ -32,7 +32,7 @@ const PopUp = ({ children, className, title, withClose, popUp, setPopUp, loading
                     onClick={(e) => e.stopPropagation()}
                 >
                     <div className='flex items-center justify-center w-full relative p-6 border-b border-border'>
-                        <span className='font-semibold text-lg'>{title}</span>
+                        <span className='font-semibold text-lg text-center'>{title}</span>
                         {withClose && <button
                             className="absolute right-4 p-2 border rounded-lg hover:bg-pearl"
                             disabled={loading}

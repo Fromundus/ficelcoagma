@@ -61,7 +61,7 @@ const AccountRegistration = ({ role }: { role?: string }) => {
     const { user } = useAuth();
     const [validated, setValidated] = React.useState<boolean>(false);
     const [consentGiven, setConsentGiven] = React.useState<boolean>(false);
-    const [popUp, setPopUp] = React.useState<boolean>(false);
+    const [popUp, setPopUp] = React.useState<boolean>(true);
     const [checked, setChecked] = React.useState<boolean>(false);
 
     const [memberNotFoundPopUp, setMemberNotFoundPop] = React.useState<boolean>(false);
@@ -265,8 +265,8 @@ const AccountRegistration = ({ role }: { role?: string }) => {
     }
 
     React.useEffect(() => {
-        const saved = localStorage.getItem("CONSENT_KEY");
-        if(!saved){
+        // const saved = localStorage.getItem("CONSENT_KEY");
+        if(!consentGiven){
             setPopUp(true);
             !role && document.body.classList.add('no-scroll');
         } else {
@@ -277,10 +277,10 @@ const AccountRegistration = ({ role }: { role?: string }) => {
     }, []);
 
     const handleAgree = () => {
-        localStorage.setItem(
-            "CONSENT_KEY",
-            JSON.stringify({ agreed_at: new Date().toISOString() })
-        );
+        // localStorage.setItem(
+        //     "CONSENT_KEY",
+        //     JSON.stringify({ agreed_at: new Date().toISOString() })
+        // );
         !role && document.body.classList.remove('no-scroll');
         setConsentGiven(true);
         setPopUp(false);
@@ -299,7 +299,7 @@ const AccountRegistration = ({ role }: { role?: string }) => {
 
     return (
         <>
-            {!role && <PopUp title='WELCOME TO 46th AGMA!' popUp={popUp} setPopUp={setPopUp}>
+            {!role && <PopUp title="WELCOME TO FICELCO'S AGMA 2025 ONLINE REGISTRATION" popUp={popUp} setPopUp={setPopUp}>
                 <div className='flex flex-col gap-6'>
                     <div className='w-full flex justify-center'>
                         <Logo className='w-full' />
