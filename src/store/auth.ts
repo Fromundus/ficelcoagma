@@ -1,13 +1,14 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 import api from '../api/axios';
+import type { User } from '../types/User';
 
-type User = {
-  id: number;
-  name: string;
-  email: string;
-  role: 'pre' | 'ons' | 'admin';
-};
+// type User = {
+//   id: number;
+//   name: string;
+//   email: string;
+//   role: 'pre' | 'ons' | 'admin';
+// };
 
 type AuthStore = {
   user: User | null;

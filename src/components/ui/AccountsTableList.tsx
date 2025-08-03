@@ -19,11 +19,13 @@ interface TableListProps {
 
 type NewUser = {
   name: string;
+  fullname: string;
   role: string;
 }
 
 type Errors = {
   name: string;
+  fullname: string;
   role: string;
 }
 
@@ -55,11 +57,13 @@ const AccountsTableList: React.FC<TableListProps> = ({ onRefresh }) => {
 
   const [newUser, setNewUser] = React.useState<NewUser>({
     name: "",
+    fullname: "",
     role: "",
   });
 
   const [errors, setErrors] = React.useState<Errors | null>({
     name: "",
+    fullname: "",
     role: "",
   });
 
@@ -206,6 +210,7 @@ const AccountsTableList: React.FC<TableListProps> = ({ onRefresh }) => {
       pushToast("Created Successfully");
       setNewUser({
         name: "",
+        fullname: "",
         role: "",
       });
       fetchData();
@@ -253,6 +258,18 @@ const AccountsTableList: React.FC<TableListProps> = ({ onRefresh }) => {
                   error={errors?.name}
                 />
 
+                <Input 
+                  id='fullname'
+                  name='fullname'
+                  label='Full Name'
+                  placeholder='Full Name'
+                  onChange={handleChange}
+                  value={newUser.fullname}
+                  loading={loading}
+                  disabled={loading}
+                  error={errors?.fullname}
+                />
+
                 <Select
                   id='role'
                   name='role'
@@ -269,7 +286,7 @@ const AccountsTableList: React.FC<TableListProps> = ({ onRefresh }) => {
                 <Button
                   className='bg-primary text-white'
                   onClick={handleCreateAccount}
-                  disabled={loading || !newUser.name || !newUser.role}
+                  disabled={loading || !newUser.name || !newUser.role || !newUser.fullname}
                   loading={loading}
                 >
                   Create
@@ -315,7 +332,8 @@ const AccountsTableList: React.FC<TableListProps> = ({ onRefresh }) => {
                   onChange={toggleSelectAll}
                 />
               </td>
-              <td className="px-2 py-4 text-left text-xs font-medium uppercase">Name</td>
+              <td className="px-2 py-4 text-left text-xs font-medium uppercase">Username</td>
+              <td className="px-2 py-4 text-left text-xs font-medium uppercase">Full Name</td>
               <td className="px-2 py-4 text-left text-xs font-medium uppercase">Role</td>
               <td className="px-2 py-4 text-left text-xs font-medium uppercase">Status</td>
               <td className="px-2 py-4 text-left text-xs font-medium uppercase">Action</td>
@@ -333,6 +351,7 @@ const AccountsTableList: React.FC<TableListProps> = ({ onRefresh }) => {
                   />
                 </td>
                 <td className="px-2 py-4 text-xs">{item.name}</td>
+                <td className="px-2 py-4 text-xs">{item.fullname}</td>
                 <td className="px-2 py-4 text-xs">{item.role}</td>
                 <td className="px-2 py-4 text-xs">{item.status}</td>
                 <td className="px-2 py-4 relative">
@@ -396,11 +415,13 @@ const Edit = ({user, fetchData, setOpenDropdownId}: {user: User, fetchData: () =
   const [loading, setLoading] = React.useState<boolean>(false);
   const [newUser, setNewUser] = React.useState<User>({
     name: user.name ?? "",
+    fullname: user.fullname ?? "",
     role: user.role ?? "",
   });
 
   const [errors, setErrors] = React.useState<Errors | null>({
     name: "",
+    fullname: "",
     role: "",
   });
 
@@ -447,6 +468,18 @@ const Edit = ({user, fetchData, setOpenDropdownId}: {user: User, fetchData: () =
           loading={loading}
           disabled={loading}
           error={errors?.name}
+        />
+
+        <Input 
+          id='fullname'
+          name='fullname'
+          label='Full Name'
+          placeholder='Full Name'
+          onChange={handleChange}
+          value={newUser.fullname}
+          loading={loading}
+          disabled={loading}
+          error={errors?.fullname}
         />
         
         <Select

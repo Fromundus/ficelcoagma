@@ -11,6 +11,7 @@ import pushToast from '../../lib/toast'
 
 type Errors = {
   name?: string;
+  fullname?: string;
   email?: string;
   role?:string;
   password?: string;
@@ -22,6 +23,7 @@ const AccountSettings = () => {
   const [userAccount, setUserAccount] = React.useState<User>({
     name: user?.name ?? "",
     email: user?.email ?? "",
+    fullname: user?.fullname ?? "",
     role: user?.role ?? "",
     password: "",
     password_confirmation: "",
@@ -29,6 +31,7 @@ const AccountSettings = () => {
 
   const [errors, setErrors] = React.useState<Errors>({
     name: "",
+    fullname: "",
     email: "",
     role: "",
     password: "",
@@ -93,13 +96,26 @@ const AccountSettings = () => {
           <Input
             id='name'
             name='name'
-            label='Name'
-            placeholder='Name'
+            label='Username'
+            placeholder='Username'
             onChange={handleChange}
             value={userAccount.name}
             disabled={user?.role !== "admin" || loading}
             withExistingData={user?.role !== "admin"}
             error={errors?.name}
+            readOnly={user?.role !== "admin"}
+          />
+
+          <Input
+            id='fullname'
+            name='fullname'
+            label='Full Name'
+            placeholder='Full Name'
+            onChange={handleChange}
+            value={userAccount.fullname}
+            disabled={user?.role !== "admin" || loading}
+            withExistingData={user?.role !== "admin"}
+            error={errors?.fullname}
             readOnly={user?.role !== "admin"}
           />
 
