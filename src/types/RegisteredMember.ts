@@ -13,4 +13,5 @@ export type RegisteredMember = {
     status?: string;
     reference_number: string;
     created_at?: string;
+    registration_method?: string;
 }

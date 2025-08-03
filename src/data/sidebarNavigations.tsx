@@ -12,7 +12,7 @@ export const preNavItems: NavItem[] = [
         ),
     },
     {
-        label: "Account Settings",
+        label: "Change Password",
         href: "account-settings",
         icon: (
         <div className='text-xl'>
@@ -33,7 +33,7 @@ export const onsNavItems: NavItem[] = [
         ),
     },
     {
-        label: "Account Settings",
+        label: "Change Password",
         href: "account-settings",
         icon: (
         <div className='text-xl'>
@@ -72,7 +72,7 @@ export const adminNavItems: NavItem[] = [
         ),
     },
     {
-        label: "Accounts",
+        label: "User Accounts",
         href: "accounts",
         icon: (
         <div className='text-xl'>
@@ -81,7 +81,7 @@ export const adminNavItems: NavItem[] = [
         ),
     },
     {
-        label: "Account Settings",
+        label: "Change Password",
         href: "account-settings",
         icon: (
         <div className='text-xl'>

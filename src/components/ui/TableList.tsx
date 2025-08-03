@@ -224,6 +224,7 @@ const TableList: React.FC<TableListProps> = ({
               <td className="px-2 py-4 text-left text-xs font-medium uppercase">Name</td>
               <td className="px-2 py-4 text-left text-xs font-medium uppercase">Address</td>
               <td className="px-2 py-4 text-left text-xs font-medium uppercase">Date & Time</td>
+              <td className="px-2 py-4 text-left text-xs font-medium uppercase">Type of Registration</td>
               <td className="px-2 py-4 text-left text-xs font-medium uppercase">Action</td>
             </tr>
           </thead>
@@ -243,6 +244,7 @@ const TableList: React.FC<TableListProps> = ({
                 <td className="px-2 py-4 text-xs">{item.name}</td>
                 <td className="px-2 py-4 text-xs">{item.address}</td>
                 <td className="px-2 py-4 text-xs">{item.created_at ? format(new Date(item.created_at), 'PPpp') : '—'}</td>
+                <td className="px-2 py-4 text-xs">{item.registration_method}</td>
                 <td className="px-2 py-4 relative">
                   <button
                     onClick={() => toggleDropdown(item.account_number)}
@@ -265,7 +267,7 @@ const TableList: React.FC<TableListProps> = ({
             ))}
             {list.length === 0 && (
               <tr>
-                <td colSpan={5} className="p-4 text-center text-gray-500">
+                <td colSpan={7} className="p-4 text-center text-gray-500">
                   No items found.
                 </td>
               </tr>
