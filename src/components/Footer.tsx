@@ -1,6 +1,5 @@
 import { FaFacebookMessenger } from "react-icons/fa";
 import { FaFacebook } from "react-icons/fa6";
-import { MdEmail } from "react-icons/md";
 
 const Footer = () => {
   return (

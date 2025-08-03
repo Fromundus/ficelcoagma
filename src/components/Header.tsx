@@ -1,8 +1,4 @@
-import React from "react";
 import { RiMenu2Line } from "react-icons/ri";
-import { useAuth } from "../store/auth";
-import Button from "./ui/Button";
-import { FiLogOut } from "react-icons/fi";
 
 type HeaderProps = {
   onOpenSidebar: () => void;
@@ -10,7 +6,6 @@ type HeaderProps = {
 };
 
 export function Header({ onOpenSidebar, title }: HeaderProps) {
-    // const { user, logout } = useAuth();
 
   return (
     <header className="fixed top-0 h-16 w-full z-1 p-4 border-b bg-white/80 backdrop-blur dark:bg-slate-900/80 dark:border-slate-800">

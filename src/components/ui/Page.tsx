@@ -1,5 +1,4 @@
 import React from 'react'
-import Logo from '../../assets/ficelco-logo.png';
 
 type Props = {
     className?: string;

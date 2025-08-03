@@ -43,6 +43,7 @@ const RegisteredMemberPage: React.FC = () => {
       createdBy: "",
       status: "",
       reference_number: "",
+      created_at: "",
   });
 
   const [errors, setErrors] = React.useState<Errors | null>({

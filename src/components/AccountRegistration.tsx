@@ -1,5 +1,4 @@
 import React from 'react'
-import Page from '../components/ui/Page'
 import PopUp from '../components/ui/PopUp';
 import { Link, useNavigate } from 'react-router-dom';
 import Button from '../components/ui/Button';

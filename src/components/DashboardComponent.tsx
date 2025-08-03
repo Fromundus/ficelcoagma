@@ -4,7 +4,6 @@ import { Header } from './Header'
 import { Outlet } from 'react-router-dom'
 import { useLocation, useResolvedPath } from "react-router-dom";
 import type { NavItem } from '../types/NavItem';
-import Footer from './Footer';
 
 type Props = {
   navItems: NavItem[];
@@ -60,7 +59,6 @@ const DashboardComponent = ({ navItems } : Props) => {
             <main className="mx-auto w-full max-w-7xl flex-1 p-4 mt-16 z-2">
               <Outlet />
             </main>
-            {/* <Footer /> */}
           </div>
         </div>
       </div>

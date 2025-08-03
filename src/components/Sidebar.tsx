@@ -1,6 +1,5 @@
-import React from "react";
 import { IoClose } from "react-icons/io5";
-import { Link, NavLink } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import type { NavItem } from "../types/NavItem";
 import { useAuth } from "../store/auth";
 import Button from "./ui/Button";

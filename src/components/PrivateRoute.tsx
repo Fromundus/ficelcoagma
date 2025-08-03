@@ -1,4 +1,3 @@
-import type React from 'react';
 import { useAuth } from '../store/auth';
 import { Navigate, Outlet } from 'react-router-dom';
 
