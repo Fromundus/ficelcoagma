@@ -1,6 +1,6 @@
 import React from 'react'
 import PopUp from '../components/ui/PopUp';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import Button from '../components/ui/Button';
 import Logo from '../components/ui/Logo';
 import Card from '../components/ui/Card';
@@ -371,7 +371,7 @@ const AccountRegistration = ({ role }: { role?: string }) => {
                             onChange={(e) => setChecked(e.target.checked)}
                         />
                         <label htmlFor="agreement" className='font-semibold cursor-pointer'>
-                            I have read and agree to the <Link className='underline text-blue-500' to={'/privacy-policy'}>Data Privacy Policy.</Link>
+                            I have read and agree to the Data Privacy Policy.
                         </label>
                     </div>
                     <Button className='w-full bg-primary text-white' disabled={!checked} onClick={handleContinue}>
