@@ -1,14 +1,13 @@
 import React, { useState, useEffect } from 'react';
-import type { RegisteredMember } from '../../types/RegisteredMember';
 import Button from './Button';
-import { useNavigate } from 'react-router-dom';
+// import { useNavigate } from 'react-router-dom';
 import { IoAdd, IoClose, IoTrash } from 'react-icons/io5';
 import api from '../../api/axios';
-import { HiOutlineDotsHorizontal } from 'react-icons/hi';
+// import { HiOutlineDotsHorizontal } from 'react-icons/hi';
 import AdminPage from './AdminPage';
 import { Input } from './Input';
-import { FaFileCsv, FaFileExcel, FaFilePdf } from 'react-icons/fa6';
-import { TbFileTypeSql } from 'react-icons/tb';
+// import { FaFileCsv, FaFileExcel, FaFilePdf } from 'react-icons/fa6';
+// import { TbFileTypeSql } from 'react-icons/tb';
 import type { User } from '../../types/User';
 import Modal from './Modal';
 import Select from './Select';
@@ -48,7 +47,7 @@ const AccountsTableList: React.FC<TableListProps> = ({ onRefresh }) => {
   const [loading, setLoading] = useState(false);
   const [list, setList] = useState<User[]>([]);
   const [selectedItems, setSelectedItems] = useState<(number | undefined)[]>([]);
-  const [openDropdownId, setOpenDropdownId] = useState<number | null>();
+  // const [openDropdownId, setOpenDropdownId] = useState<number | null>();
   const [currentPage, setCurrentPage] = useState(1);
   const [lastPage, setLastPage] = useState(1);
   const [search, setSearch] = useState('');
@@ -76,7 +75,7 @@ const AccountsTableList: React.FC<TableListProps> = ({ onRefresh }) => {
     })
   }
 
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
 
   const fetchData = async (page = 1, searchQuery = '') => {
     setLoading(true);
@@ -124,16 +123,16 @@ const AccountsTableList: React.FC<TableListProps> = ({ onRefresh }) => {
     }
   };
 
-  const toggleDropdown = (id: number | undefined) => {
-    setOpenDropdownId(prev => (prev === id ? null : id));
-  };
+  // const toggleDropdown = (id: number | undefined) => {
+  //   setOpenDropdownId(prev => (prev === id ? null : id));
+  // };
 
-  const handleAction = (type: string, member: User) => {
-    if (type === 'edit') {
-      navigate(`${member.id}`);
-    }
-    setOpenDropdownId(null);
-  };
+  // const handleAction = (type: string, member: User) => {
+  //   if (type === 'edit') {
+  //     navigate(`${member.id}`);
+  //   }
+  //   setOpenDropdownId(null);
+  // };
 
   const handlePageChange = (page: number) => {
     if (page >= 1 && page <= lastPage) {
@@ -155,45 +154,45 @@ const AccountsTableList: React.FC<TableListProps> = ({ onRefresh }) => {
     );
   }
 
-  const handleDownload = async (type: 'csv' | 'xlsx' | 'pdf' | 'sql') => {
-    const url = {
-      csv: 'export/csv',
-      xlsx: 'export/xlsx',
-      pdf: 'export/pdf',
-      sql: 'export/sql'
-    }[type];
+  // const handleDownload = async (type: 'csv' | 'xlsx' | 'pdf' | 'sql') => {
+  //   const url = {
+  //     csv: 'export/csv',
+  //     xlsx: 'export/xlsx',
+  //     pdf: 'export/pdf',
+  //     sql: 'export/sql'
+  //   }[type];
 
-    try {
-      const response = await api.get(`/${url}`, {
-        responseType: 'blob', // Important!
-      });
+  //   try {
+  //     const response = await api.get(`/${url}`, {
+  //       responseType: 'blob', // Important!
+  //     });
 
-      // Create a blob from the response
-      const blob = new Blob([response.data], { type: response.headers['content-type'] });
-      const downloadUrl = URL.createObjectURL(blob);
+  //     // Create a blob from the response
+  //     const blob = new Blob([response.data], { type: response.headers['content-type'] });
+  //     const downloadUrl = URL.createObjectURL(blob);
 
-      // Create a link element and simulate click
-      const link = document.createElement('a');
-      link.href = downloadUrl;
+  //     // Create a link element and simulate click
+  //     const link = document.createElement('a');
+  //     link.href = downloadUrl;
 
-      // Set the filename from content-disposition header if available
-      const contentDisposition = response.headers['content-disposition'];
-      let fileName = 'registered_members.' + type;
-      if (contentDisposition) {
-        const match = contentDisposition.match(/filename="?(.+)"?/);
-        if (match?.[1]) fileName = match[1];
-      }
+  //     // Set the filename from content-disposition header if available
+  //     const contentDisposition = response.headers['content-disposition'];
+  //     let fileName = 'registered_members.' + type;
+  //     if (contentDisposition) {
+  //       const match = contentDisposition.match(/filename="?(.+)"?/);
+  //       if (match?.[1]) fileName = match[1];
+  //     }
 
-      link.download = fileName;
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
-      URL.revokeObjectURL(downloadUrl); // Clean up
-    } catch (error) {
-      console.error('Download error:', error);
-      alert('Failed to download file.');
-    }
-  };
+  //     link.download = fileName;
+  //     document.body.appendChild(link);
+  //     link.click();
+  //     document.body.removeChild(link);
+  //     URL.revokeObjectURL(downloadUrl); // Clean up
+  //   } catch (error) {
+  //     console.error('Download error:', error);
+  //     alert('Failed to download file.');
+  //   }
+  // };
 
   const handleCreateAccount = async () => {
     setErrors(null);

@@ -1,4 +1,3 @@
-import React from 'react'
 import Page from '../components/ui/Page'
 import Button from '../components/ui/Button'
 import { useNavigate } from 'react-router-dom'

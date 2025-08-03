@@ -1,4 +1,3 @@
-import React from 'react'
 import AdminPage from '../../components/ui/AdminPage';
 import { useAuth } from '../../store/auth';
 import AccountRegistration from '../../components/AccountRegistration';

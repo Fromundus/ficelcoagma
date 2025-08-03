@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import type { RegisteredMember } from '../../types/RegisteredMember';
 import Button from './Button';
 import { useNavigate } from 'react-router-dom';
-import { IoAdd, IoClose, IoTrash } from 'react-icons/io5';
+import { IoAdd, IoClose } from 'react-icons/io5';
 import api from '../../api/axios';
 import { HiOutlineDotsHorizontal } from 'react-icons/hi';
 import AdminPage from './AdminPage';
@@ -16,11 +16,13 @@ interface TableListProps {
   onRefresh?: () => void;
 }
 
-const TableList: React.FC<TableListProps> = ({ onRefresh }) => {
+const TableList: React.FC<TableListProps> = ({ 
+  // onRefresh 
+}) => {
   const [initialLoading, setInitialLoading] = useState(true);
   const [loading, setLoading] = useState(false);
   const [list, setList] = useState<RegisteredMember[]>([]);
-  const [selectedItems, setSelectedItems] = useState<string[]>([]);
+  // const [selectedItems, setSelectedItems] = useState<string[]>([]);
   const [openDropdownId, setOpenDropdownId] = useState<string | null>(null);
   const [currentPage, setCurrentPage] = useState(1);
   const [lastPage, setLastPage] = useState(1);
@@ -38,7 +40,7 @@ const TableList: React.FC<TableListProps> = ({ onRefresh }) => {
       setList(res.data.data.data);
       setCurrentPage(res.data.data.current_page);
       setLastPage(res.data.data.last_page);
-      setSelectedItems([]);
+      // setSelectedItems([]);
     } catch (err) {
       console.error('Error fetching data:', err);
     } finally {
@@ -51,29 +53,29 @@ const TableList: React.FC<TableListProps> = ({ onRefresh }) => {
     fetchData(currentPage, search);
   }, [currentPage, search]);
 
-  const toggleSelect = (id: string) => {
-    setSelectedItems(prev =>
-      prev.includes(id) ? prev.filter(i => i !== id) : [...prev, id]
-    );
-  };
+  // const toggleSelect = (id: string) => {
+  //   setSelectedItems(prev =>
+  //     prev.includes(id) ? prev.filter(i => i !== id) : [...prev, id]
+  //   );
+  // };
 
-  const toggleSelectAll = () => {
-    if (selectedItems.length === list.length) {
-      setSelectedItems([]);
-    } else {
-      setSelectedItems(list.map(item => item.account_number));
-    }
-  };
+  // const toggleSelectAll = () => {
+  //   if (selectedItems.length === list.length) {
+  //     setSelectedItems([]);
+  //   } else {
+  //     setSelectedItems(list.map(item => item.account_number));
+  //   }
+  // };
 
-  const handleDeleteSelected = async () => {
-    try {
-      await api.post('/registered-member/batch-delete', { ids: selectedItems });
-      fetchData(currentPage, search); // refetch after delete
-      onRefresh?.();
-    } catch (err) {
-      console.error('Failed to delete:', err);
-    }
-  };
+  // const handleDeleteSelected = async () => {
+  //   try {
+  //     await api.post('/registered-member/batch-delete', { ids: selectedItems });
+  //     fetchData(currentPage, search); // refetch after delete
+  //     onRefresh?.();
+  //   } catch (err) {
+  //     console.error('Failed to delete:', err);
+  //   }
+  // };
 
   const toggleDropdown = (id: string) => {
     setOpenDropdownId(prev => (prev === id ? null : id));
