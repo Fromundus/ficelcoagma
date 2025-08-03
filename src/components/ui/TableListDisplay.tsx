@@ -7,7 +7,7 @@ type Props = {
 
 const TableDisplay = ({ list }: Props) => {
   return (
-    <div className="border w-full">
+    <div className="border w-full" style={{ zIndex: 0 }}>
       <table className="min-w-full divide-y">
         <thead className="bg-gray-100">
           <tr>

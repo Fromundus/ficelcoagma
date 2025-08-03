@@ -12,6 +12,7 @@ import type { User } from '../../types/User';
 import Modal from './Modal';
 import Select from './Select';
 import pushToast from '../../lib/toast';
+import { FaPlay, FaStop } from 'react-icons/fa';
 
 interface TableListProps {
   onRefresh?: () => void;
@@ -35,12 +36,8 @@ const roleOptions = [
     name: "Admin",
   },
     {
-    id: "ons",
-    name: "Onsite",
-  },
-    {
-    id: "pre",
-    name: "Pre Reg",
+    id: "user",
+    name: "User",
   },
 ];
 
@@ -121,11 +118,27 @@ const AccountsTableList: React.FC<TableListProps> = ({ onRefresh }) => {
 
   const handleDeleteSelected = async () => {
     try {
-      await api.post('/account/batch-delete', { ids: selectedItems });
+      const res = await api.post('/account/batch-delete', { ids: selectedItems });
       fetchData(currentPage, search); // refetch after delete
+      console.log(res);
+      pushToast(res.data.message);
       onRefresh?.();
     } catch (err) {
+      console.log(err);
       console.error('Failed to delete:', err);
+    }
+  };
+
+  const handleUpdateStatusSelected = async (status: string) => {
+    try {
+      const res = await api.post('/account/batch-update', { ids: selectedItems, status: status });
+      fetchData(currentPage, search); // refetch after delete
+      console.log(res);
+      pushToast(res.data.message);
+      onRefresh?.();
+    } catch (err) {
+      console.log(err);
+      console.error('Failed to update:', err);
     }
   };
 
@@ -300,6 +313,20 @@ const AccountsTableList: React.FC<TableListProps> = ({ onRefresh }) => {
               disabled={selectedItems.length === 0}
             >
               <IoTrash className='text-lg' />
+            </Button>
+            <Button
+              className='bg-green-500 text-white'
+              onClick={() => handleUpdateStatusSelected("active")}
+              disabled={selectedItems.length === 0}
+            >
+              <FaPlay className='text-lg' />
+            </Button>
+            <Button
+              className='bg-gray-500 text-white'
+              onClick={() => handleUpdateStatusSelected("inactive")}
+              disabled={selectedItems.length === 0}
+            >
+              <FaStop className='text-lg' />
             </Button>
           </div>
           <div className='flex items-center gap-2'>

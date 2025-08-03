@@ -21,9 +21,8 @@ import NotFound from './pages/NotFound'
 import OnsiteLogin from './pages/OnsiteLogin'
 import PreRegLogin from './pages/PreRegLogin'
 import Unauthorized from './pages/Unauthorized'
-import PreRegLayout from './layouts/PreRegLayout'
-import OnsiteLayout from './layouts/OnsiteLayout'
 import Accounts from './pages/Admin/Accounts'
+import UserLayout from './layouts/UserLayout'
 
 function App() {
   const { token, fetchUser } = useAuth();
@@ -44,7 +43,7 @@ function App() {
 
           <Route path="/prereg" element={<PreRegLogin />} />
           <Route path="/onsite" element={<OnsiteLogin />} />
-          <Route path='/admin-login' element={<Login title='Admin Login' required_role='admin' />} />
+          <Route path='/admin-login' element={<Login title='Admin Login' required_settings='admin' required_role='admin' />} />
           <Route path='/online' element={<OnlineRegistration />} />
           
           <Route path='/registered/:reference_number' element={<Registered />} />
@@ -52,15 +51,8 @@ function App() {
           <Route path="/register" element={<Register />} />
         </Route>
 
-        <Route element={<PrivateRoute requiredRole="pre" />} >
-          <Route path='pre' element={<PreRegLayout />} >
-            <Route index element={<MemberRegistration />} />
-            <Route path='account-settings' element={<AccountSettings />} />
-          </Route>
-        </Route>
-
-        <Route element={<PrivateRoute requiredRole="ons" />} >
-          <Route path='ons' element={<OnsiteLayout />} >
+        <Route element={<PrivateRoute requiredRole="user" />} >
+          <Route path='user' element={<UserLayout />} >
             <Route index element={<MemberRegistration />} />
             <Route path='account-settings' element={<AccountSettings />} />
           </Route>

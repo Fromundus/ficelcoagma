@@ -207,7 +207,7 @@ const TableList: React.FC<TableListProps> = ({
       </form>
 
 
-      <div className='border mt-[120px] -z-10'>
+      <div className='border mt-[120px]' style={{ zIndex: 0 }}>
         <table className="min-w-full divide-y">
           <thead className="bg-gray-100">
             <tr>

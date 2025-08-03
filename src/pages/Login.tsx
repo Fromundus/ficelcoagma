@@ -8,17 +8,25 @@ import Card from '../components/ui/Card';
 import Page from '../components/ui/Page';
 import Logo from '../components/ui/Logo';
 
+type Props = {
+  title: string; 
+  required_settings: 'prereg' | 'onsite' | 'admin'; 
+  required_role: 'user' | 'admin';
+}
+
 type LoginData = {
   name: string;
   password: string;
-  required_role: string;
+  required_settings?: 'prereg' | 'onsite' | 'admin';
+  required_role?: 'user' | 'admin';
 }
 
-export default function Login({ title, required_role }: { title: string; required_role: string }) {
+export default function Login({ title, required_settings, required_role }: Props) {
   const [loading, setLoading] = useState<boolean>(false);
   const [data, setData] = useState<LoginData>({
     name: "",
     password: "",
+    required_settings: required_settings,
     required_role: required_role,
   });
 

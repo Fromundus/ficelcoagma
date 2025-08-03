@@ -1,31 +1,10 @@
 import { LuLayoutDashboard, LuMonitor, LuUser, LuUserPlus, LuUsers } from "react-icons/lu";
 import type { NavItem } from "../types/NavItem"
 
-export const preNavItems: NavItem[] = [
+export const userNavItems: NavItem[] = [
     {
         label: "Member Registration",
-        href: "/pre",
-        icon: (
-        <div className='text-xl'>
-            <LuUserPlus />
-        </div>
-        ),
-    },
-    {
-        label: "Change Password",
-        href: "account-settings",
-        icon: (
-        <div className='text-xl'>
-            <LuUser />
-        </div>
-        ),
-    },
-];
-
-export const onsNavItems: NavItem[] = [
-    {
-        label: "Member Registration",
-        href: "/ons",
+        href: "/user",
         icon: (
         <div className='text-xl'>
             <LuUserPlus />

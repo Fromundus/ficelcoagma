@@ -137,17 +137,17 @@ const AccountRegistration = ({ role }: { role?: string }) => {
         })
     }
 
-    function methodOfRegistration(role: string | undefined){
-        if(role === "admin"){
-            return "admin";
-        } else if (role === "pre"){
-            return "prereg";
-        } else if (role === "ons"){
-            return "onsite"
-        } else {
-            return "online"
-        }
-    }
+    // function methodOfRegistration(role: string | undefined){
+    //     if(role === "admin"){
+    //         return "admin";
+    //     } else if (role === "pre"){
+    //         return "prereg";
+    //     } else if (role === "ons"){
+    //         return "onsite"
+    //     } else {
+    //         return "online"
+    //     }
+    // }
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -156,7 +156,8 @@ const AccountRegistration = ({ role }: { role?: string }) => {
 
         const dataToSend = {
             ...data,
-            registration_method: methodOfRegistration(role),
+            role: role ? role : null,
+            // registration_method: methodOfRegistration(role),
         }
 
         try {
@@ -221,8 +222,9 @@ const AccountRegistration = ({ role }: { role?: string }) => {
             created: validatedData.created ?? data.created ,
             createdBy: validatedData.createdBy ?? data.createdBy ,
             status: validatedData.status ?? data.status ,
-            registration_method: methodOfRegistration(role),
-            created_by: role ? (user?.name)?.toString() : null,
+            // registration_method: methodOfRegistration(role), handled in the backend
+            created_by: role ? (user?.fullname)?.toString() : null,
+            role: role ? role : null, // if there is role it will check if prereg or onsite based on settings status, if role is null it will count as online reg
         }
 
         try {
@@ -261,6 +263,11 @@ const AccountRegistration = ({ role }: { role?: string }) => {
             console.log(err);
             setLoading(false);
             setErrors(err.response.data.message);
+
+            if(err.response.data.message === "Online registration is closed."){
+                pushToast("Online registration is closed.");
+                setValidated(false);
+            }
         }
     }
 
