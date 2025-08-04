@@ -222,10 +222,11 @@ const TableList: React.FC<TableListProps> = ({
               <td className="px-2 py-4 text-left text-xs font-medium uppercase">Account Number</td>
               <td className="px-2 py-4 text-left text-xs font-medium uppercase">Book</td>
               <td className="px-2 py-4 text-left text-xs font-medium uppercase">Name</td>
+              <td className="px-2 py-4 text-left text-xs font-medium uppercase">Occupant</td>
               <td className="px-2 py-4 text-left text-xs font-medium uppercase">Address</td>
               <td className="px-2 py-4 text-left text-xs font-medium uppercase">Date & Time</td>
               <td className="px-2 py-4 text-left text-xs font-medium uppercase">Type of Registration</td>
-              <td className="px-2 py-4 text-left text-xs font-medium uppercase">Action</td>
+              {/* <td className="px-2 py-4 text-left text-xs font-medium uppercase">Action</td> */}
             </tr>
           </thead>
           <tbody className='text-xs'>
@@ -242,10 +243,11 @@ const TableList: React.FC<TableListProps> = ({
                 <td className="px-2 py-4 text-xs">{item.account_number}</td>
                 <td className="px-2 py-4 text-xs">{item.book}</td>
                 <td className="px-2 py-4 text-xs">{item.name}</td>
+                <td className="px-2 py-4 text-xs">{item.occupant}</td>
                 <td className="px-2 py-4 text-xs">{item.address}</td>
                 <td className="px-2 py-4 text-xs">{item.created_at ? format(new Date(item.created_at), 'PPpp') : '—'}</td>
                 <td className="px-2 py-4 text-xs">{item.registration_method}</td>
-                <td className="px-2 py-4 relative">
+                {/* <td className="px-2 py-4 relative">
                   <button
                     onClick={() => toggleDropdown(item.account_number)}
                     className="p-1 hover:bg-gray-200 rounded-full"
@@ -262,7 +264,7 @@ const TableList: React.FC<TableListProps> = ({
                       </button>
                     </div>
                   )}
-                </td>
+                </td> */}
               </tr>
             ))}
             {list.length === 0 && (

@@ -26,12 +26,14 @@ export const useAuth = create<AuthStore>()(
       login: (user, token) => set({ user, token }),
       logout: async () => {
         try {
-          await api.post('/logout');
+          const res = await api.post('/logout');
+          console.log(res);
+          localStorage.removeItem('auth-storage');
+          set({ user: null, token: null });
+          window.location.href = `${res.data.loginUrl}`;
         } catch (e) {
           console.error('Logout failed', e);
         }
-        localStorage.removeItem('auth-storage');
-        set({ user: null, token: null });
       },
       fetchUser: async () => {
         try {
@@ -45,7 +47,7 @@ export const useAuth = create<AuthStore>()(
           }
         } catch (e: any) {
           console.error('Failed to fetch user:', e);
-          if(e?.status === 401){
+          if(e?.status === 401 || e?.status === 403){
             localStorage.removeItem('auth-storage');
             set({ user: null, token: null });
           }

@@ -388,7 +388,7 @@ const AccountRegistration = ({ role }: { role?: string }) => {
             </PopUp>}
 
             <div className='w-full'>
-                {!validated && <Card className={`w-full ${!role ? "max-w-lg" : "max-w-md"} mx-auto`} title='Member Registration' childrenClassName='p-6 flex flex-col gap-6'>
+                {!validated && (!role ? consentGiven : true) &&  <Card className={`w-full ${!role ? "max-w-lg" : "max-w-md"} mx-auto`} title='Member Registration' childrenClassName='p-6 flex flex-col gap-6'>
                     {!role && <div className='w-full flex justify-center'>
                         <Logo className='w-full' />
                     </div>}
