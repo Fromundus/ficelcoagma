@@ -314,60 +314,10 @@ const AccountRegistration = ({ role }: { role?: string }) => {
                     <p>To continue, you must agree to our data privacy policy.</p>
                     <div className="w-full h-96 overflow-auto p-4 bg-white border border-gray-300 rounded text-sm text-graphite space-y-6">
                         <span className='font-bold text-primary text-lg'>Data Privacy Policy</span>
-                        <p>Effective Date: August 1, 2025</p>
+                        <p>The Annual General Membership Assembly (AGMA) allows our Member-Consumers-Owners (MCOs) significant information regarding the Institutional and Technical highlights of the Cooperative for the calendar year 2025. By registering, you are assured of a slot in the <strong>RAFFLE DRAW</strong> and cound win exciting prizes.</p>
 
-                        <section>
-                            <h2 className="font-semibold mb-2">1. Information We Collect</h2>
-                            <p className="mb-2">We may collect the following types of information:</p>
-                            <ul className="list-disc pl-6 space-y-1">
-                            <li>Personal Identification Information (e.g., name, email, phone)</li>
-                            <li>Personal Documents</li>
-                            <li>User-Provided Content</li>
-                            </ul>
-                        </section>
-
-                        <section>
-                            <h2 className="font-semibold mb-2">2. How We Use Your Information</h2>
-                            <ul className="list-disc pl-6 space-y-1">
-                            <li>To provide and improve our services</li>
-                            <li>To process transactions and send updates</li>
-                            <li>To respond to inquiries and support requests</li>
-                            <li>To send promotional emails (with consent)</li>
-                            <li>To comply with legal requirements</li>
-                            </ul>
-                        </section>
-
-                        <section>
-                            <h2 className="font-semibold mb-2">3. Sharing and Disclosure</h2>
-                            <p className="mb-2">We do not sell your data. We may share data with:</p>
-                            <ul className="list-disc pl-6 space-y-1">
-                            <li>Service providers (e.g., hosting, analytics)</li>
-                            <li>Legal authorities if required by law</li>
-                            <li>Third parties in a business transfer</li>
-                            </ul>
-                        </section>
-
-                        <section>
-                            <h2 className="font-semibold mb-2">4. Your Rights</h2>
-                            <p className="mb-2">You may have rights to:</p>
-                            <ul className="list-disc pl-6 space-y-1">
-                            <li>Access and correct your personal data</li>
-                            <li>Request deletion of your data</li>
-                            <li>Object to or restrict processing</li>
-                            <li>Withdraw consent at any time</li>
-                            </ul>
-                        </section>
-
-                        <section>
-                            <h2 className="font-semibold mb-2">5. Contact Us</h2>
-                            <p className="mb-2">If you have questions, contact us at:</p>
-                            {/* <p>Email: <a href="mailto:johncarlcastrocueva@gmail.com" className="text-blue-600 hover:underline">johncarlcastrocueva@gmail.com</a></p>
-                            <p>Phone: 09605510756</p>
-                            <p>Address: Salvacion, Panganiban, Catanduanes</p> */}
-                        </section>
-
-                        <p>Last updated: August 1, 2025</p>
-                        </div>
+                        <p>FICELCO respects the privacy rights of our MCO's. By filling-out this form, you expressly consent to the processing of your personal and /or sensitive personal information for the purpose of FICELCO 2025 AGMA Registration. All collected information in this form will be stored and accessed with the outmost confidentiality in accordance with the Data Privacy Act of 2012.</p>    
+                    </div>
 
                     <div className='flex gap-2'>
                         <input
@@ -409,7 +359,7 @@ const AccountRegistration = ({ role }: { role?: string }) => {
                         <Input
                             id='book'
                             name='book'
-                            label='Book Number'
+                            label='Sequence (First 6 Characters)'
                             placeholder='XXXXXX'
                             onChange={handleChange}
                             value={data.book}
@@ -451,7 +401,7 @@ const AccountRegistration = ({ role }: { role?: string }) => {
                             <Input
                                 id='book'
                                 name='book'
-                                label='Book Number'
+                                label='Sequence'
                                 placeholder='XXXXXX'
                                 onChange={handleChange}
                                 value={validatedData.book}

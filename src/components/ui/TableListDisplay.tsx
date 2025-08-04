@@ -12,7 +12,7 @@ const TableDisplay = ({ list }: Props) => {
         <thead className="bg-gray-100">
           <tr>
             <td className="px-2 py-4 text-left text-xs font-medium uppercase">Account Number</td>
-            <td className="px-2 py-4 text-left text-xs font-medium uppercase">Book</td>
+            <td className="px-2 py-4 text-left text-xs font-medium uppercase">Sequence</td>
             <td className="px-2 py-4 text-left text-xs font-medium uppercase">Name</td>
             <td className="px-2 py-4 text-left text-xs font-medium uppercase">Address</td>
             <td className="px-2 py-4 text-left text-xs font-medium uppercase">Occupant</td>

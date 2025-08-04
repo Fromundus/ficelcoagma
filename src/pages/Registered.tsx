@@ -126,7 +126,7 @@ const Registered = () => {
                                             {registeredMember.book && <Input
                                                 id='book'
                                                 name='book'
-                                                label='Book Number'
+                                                label='Sequence'
                                                 placeholder='XXXXXX'
                                                 value={registeredMember.book}
                                                 loading={loading}

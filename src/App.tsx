@@ -9,7 +9,6 @@ import { useAuth } from './store/auth'
 import React from 'react'
 import AccountSettings from './pages/Admin/AccountSettings'
 import Landing from './pages/Landing'
-import PrivacyPolicy from './pages/PrivacyPolicy'
 import Registered from './pages/Registered'
 import Dashboard from './pages/Admin/Dashboard'
 import RegisteredMembers from './pages/Admin/RegisteredMembers'
@@ -47,7 +46,6 @@ function App() {
           <Route path='/online' element={<OnlineRegistration />} />
           
           <Route path='/registered/:reference_number' element={<Registered />} />
-          <Route path='/privacy-policy' element={<PrivacyPolicy />} />
           <Route path="/register" element={<Register />} />
         </Route>
 
