@@ -13,6 +13,7 @@ import Modal from './Modal';
 import Select from './Select';
 import pushToast from '../../lib/toast';
 import { FaPlay, FaStop } from 'react-icons/fa';
+import { useAuth } from '../../store/auth';
 
 interface TableListProps {
   onRefresh?: () => void;
@@ -51,6 +52,8 @@ const AccountsTableList: React.FC<TableListProps> = ({ onRefresh }) => {
   const [lastPage, setLastPage] = useState(1);
   const [search, setSearch] = useState('');
   const [searchInput, setSearchInput] = useState('');
+
+  const { sidebar } = useAuth();
 
   const [newUser, setNewUser] = React.useState<NewUser>({
     name: "",
@@ -236,118 +239,120 @@ const AccountsTableList: React.FC<TableListProps> = ({ onRefresh }) => {
   };
 
   return (
-    <div className="flex flex-col gap-4">
-      <form onSubmit={handleSearch} className='flex flex-col bg-white z-10 items-center gap-2 fixed top-16 p-4 right-0 left-0 md:left-72 lg:left-72'>
-        <div className='flex items-center gap-2 w-full relative'>
-          <Input
-            onChange={(e) => setSearchInput(e.target.value)}
-            value={searchInput}
-            className='text-sm pe-10'
-            placeholder="Search by name, book, or account number"
-          />
-          <IoClose className='text-xl cursor-pointer absolute right-24' onClick={() => {
-            setSearchInput("");
-            setSearch("");
-          }} />
-          <Button className="bg-primary text-white" type="submit" disabled={loading}>Search</Button>
-        </div>
-        <div className='flex items-center gap-2 w-full justify-between mt-2'>
-          <div className='flex items-center gap-2'>
-            {/* <Button className='bg-primary text-white' onClick={() => navigate('/admin/member-registration')}>
-              <IoAdd className='text-lg' />
-            </Button> */}
-
-            <Modal title='Add User' buttonClassName='bg-primary text-white' label={<IoAdd className='text-lg' />}>
-              <div className='flex flex-col gap-4'>
-                <Input 
-                  id='name'
-                  name='name'
-                  label='Username'
-                  placeholder='Username'
-                  onChange={handleChange}
-                  value={newUser.name}
-                  loading={loading}
-                  disabled={loading}
-                  error={errors?.name}
-                />
-
-                <Input 
-                  id='fullname'
-                  name='fullname'
-                  label='Full Name'
-                  placeholder='Full Name'
-                  onChange={handleChange}
-                  value={newUser.fullname}
-                  loading={loading}
-                  disabled={loading}
-                  error={errors?.fullname}
-                />
-
-                <Select
-                  id='role'
-                  name='role'
-                  label='Role'
-                  placeholder='Please Select a Role'
-                  options={roleOptions} 
-                  onChange={handleChange} 
-                  value={newUser.role}
-                  loading={loading}
-                  disabled={loading}
-                  error={errors?.role}
-                />
-
-                <Button
-                  className='bg-primary text-white'
-                  onClick={handleCreateAccount}
-                  disabled={loading || !newUser.name || !newUser.role || !newUser.fullname}
-                  loading={loading}
-                >
-                  Create
-                </Button>
-              </div>
-            </Modal>
-
-            <Button
-              className='bg-red-500 text-white'
-              onClick={handleDeleteSelected}
-              disabled={selectedItems.length === 0}
-            >
-              <IoTrash className='text-lg' />
-            </Button>
-            <Button
-              className='bg-green-500 text-white'
-              onClick={() => handleUpdateStatusSelected("active")}
-              disabled={selectedItems.length === 0}
-            >
-              <FaPlay className='text-lg' />
-            </Button>
-            <Button
-              className='bg-gray-500 text-white'
-              onClick={() => handleUpdateStatusSelected("inactive")}
-              disabled={selectedItems.length === 0}
-            >
-              <FaStop className='text-lg' />
-            </Button>
+    <div className="flex flex-col gap-4 p-4">
+      <div className={`fixed top-16 z-10 bg-white right-0 p-4 ${sidebar === "true" ? "left-0 md:left-72 lg:left-72" : "left-0"}`}>
+        <form onSubmit={handleSearch} className='flex flex-col items-center gap-2 mx-auto h-full w-full'>
+          <div className='flex items-center gap-2 w-full relative'>
+            <Input
+              onChange={(e) => setSearchInput(e.target.value)}
+              value={searchInput}
+              className='text-sm pe-10'
+              placeholder="Search by name, book, or account number"
+            />
+            <IoClose className='text-xl cursor-pointer absolute right-24' onClick={() => {
+              setSearchInput("");
+              setSearch("");
+            }} />
+            <Button className="bg-primary text-white" type="submit" disabled={loading}>Search</Button>
           </div>
-          <div className='flex items-center gap-2'>
-            {/* <Button className='bg-red-500 text-white' onClick={() => handleDownload('pdf')}>
-              <FaFilePdf className='text-lg' />
-            </Button>
-            <Button className='bg-blue-500 text-white' onClick={() => handleDownload('csv')}>
-              <FaFileCsv className='text-lg' />
-            </Button>
-            <Button className='bg-green-500 text-white' onClick={() => handleDownload('xlsx')}>
-              <FaFileExcel className='text-lg' />
-            </Button>
-            <Button className='bg-pink-500 text-white' onClick={() => handleDownload('sql')}>
-              <TbFileTypeSql className='text-xl' />
-            </Button> */}
+          <div className='flex items-center gap-2 w-full justify-between mt-2'>
+            <div className='flex items-center gap-2'>
+              {/* <Button className='bg-primary text-white' onClick={() => navigate('/admin/member-registration')}>
+                <IoAdd className='text-lg' />
+              </Button> */}
+
+              <Modal title='Add User' buttonClassName='bg-primary text-white' label={<IoAdd className='text-lg' />}>
+                <div className='flex flex-col gap-4'>
+                  <Input 
+                    id='name'
+                    name='name'
+                    label='Username'
+                    placeholder='Username'
+                    onChange={handleChange}
+                    value={newUser.name}
+                    loading={loading}
+                    disabled={loading}
+                    error={errors?.name}
+                  />
+
+                  <Input 
+                    id='fullname'
+                    name='fullname'
+                    label='Full Name'
+                    placeholder='Full Name'
+                    onChange={handleChange}
+                    value={newUser.fullname}
+                    loading={loading}
+                    disabled={loading}
+                    error={errors?.fullname}
+                  />
+
+                  <Select
+                    id='role'
+                    name='role'
+                    label='Role'
+                    placeholder='Please Select a Role'
+                    options={roleOptions} 
+                    onChange={handleChange} 
+                    value={newUser.role}
+                    loading={loading}
+                    disabled={loading}
+                    error={errors?.role}
+                  />
+
+                  <Button
+                    className='bg-primary text-white'
+                    onClick={handleCreateAccount}
+                    disabled={loading || !newUser.name || !newUser.role || !newUser.fullname}
+                    loading={loading}
+                  >
+                    Create
+                  </Button>
+                </div>
+              </Modal>
+
+              <Button
+                className='bg-red-500 text-white'
+                onClick={handleDeleteSelected}
+                disabled={selectedItems.length === 0}
+              >
+                <IoTrash className='text-lg' />
+              </Button>
+              <Button
+                className='bg-green-500 text-white'
+                onClick={() => handleUpdateStatusSelected("active")}
+                disabled={selectedItems.length === 0}
+              >
+                <FaPlay className='text-lg' />
+              </Button>
+              <Button
+                className='bg-gray-500 text-white'
+                onClick={() => handleUpdateStatusSelected("inactive")}
+                disabled={selectedItems.length === 0}
+              >
+                <FaStop className='text-lg' />
+              </Button>
+            </div>
+            <div className='flex items-center gap-2'>
+              {/* <Button className='bg-red-500 text-white' onClick={() => handleDownload('pdf')}>
+                <FaFilePdf className='text-lg' />
+              </Button>
+              <Button className='bg-blue-500 text-white' onClick={() => handleDownload('csv')}>
+                <FaFileCsv className='text-lg' />
+              </Button>
+              <Button className='bg-green-500 text-white' onClick={() => handleDownload('xlsx')}>
+                <FaFileExcel className='text-lg' />
+              </Button>
+              <Button className='bg-pink-500 text-white' onClick={() => handleDownload('sql')}>
+                <TbFileTypeSql className='text-xl' />
+              </Button> */}
+            </div>
           </div>
-        </div>
-      </form>
+        </form>
+      </div>
 
 
-      <div className='border mt-[120px]'>
+      <div className='border overflow-x-auto mt-[120px]'>
         <table className="min-w-full divide-y">
           <thead className="bg-gray-100">
             <tr>

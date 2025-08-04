@@ -7,15 +7,15 @@ type Props = {
 
 const TableDisplay = ({ list }: Props) => {
   return (
-    <div className="border w-full" style={{ zIndex: 0 }}>
+    <div className="border overflow-x-auto w-full" style={{ zIndex: 0 }}>
       <table className="min-w-full divide-y">
         <thead className="bg-gray-100">
           <tr>
             <td className="px-2 py-4 text-left text-xs font-medium uppercase">Account Number</td>
             <td className="px-2 py-4 text-left text-xs font-medium uppercase">Book</td>
             <td className="px-2 py-4 text-left text-xs font-medium uppercase">Name</td>
-            <td className="px-2 py-4 text-left text-xs font-medium uppercase">Occupant</td>
             <td className="px-2 py-4 text-left text-xs font-medium uppercase">Address</td>
+            <td className="px-2 py-4 text-left text-xs font-medium uppercase">Occupant</td>
             <td className="px-2 py-4 text-left text-xs font-medium uppercase">Date & Time</td>
             <td className="px-2 py-4 text-left text-xs font-medium uppercase">Type of Registration</td>
           </tr>
@@ -26,8 +26,8 @@ const TableDisplay = ({ list }: Props) => {
               <td className="px-2 py-4 text-xs">{item.account_number}</td>
               <td className="px-2 py-4 text-xs">{item.book}</td>
               <td className="px-2 py-4 text-xs">{item.name}</td>
-              <td className="px-2 py-4 text-xs">{item.occupant}</td>
               <td className="px-2 py-4 text-xs">{item.address}</td>
+              <td className="px-2 py-4 text-xs">{item.occupant}</td>
               <td className="px-2 py-4 text-xs">{item.created_at ? format(new Date(item.created_at), 'PPpp') : '—'}</td>
               <td className="px-2 py-4 text-xs">{item.registration_method}</td>
             </tr>

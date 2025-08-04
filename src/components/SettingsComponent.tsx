@@ -118,7 +118,7 @@ const SettingsComponent = () => {
         <Card className='w-full' childrenClassName='p-6 flex flex-col gap-4 bg-pearl' titleClassName='w-full text-md font-normal' title={
             <div className='grid gap-4 grid-row-2 grid-cols-1 sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-3'>
                 <div className='flex items-center gap-4 justify-start sm:justify-center md:justify-center lg:justify-center'>
-                    <span>Online:</span>
+                    <span className='font-normal'>Online:</span>
                     <label
                         htmlFor="online"
                         className={`relative block h-6 w-11 rounded-full transition-colors cursor-pointer [-webkit-tap-highlight-color:_transparent] ${settings.online === "active" ? "bg-primary" : "bg-gray-300"}`}
@@ -132,7 +132,7 @@ const SettingsComponent = () => {
                 </div>
 
                 <div className='flex items-center gap-4 justify-start sm:justify-center md:justify-center lg:justify-center'>
-                    <span>Prereg:</span>
+                    <span className='font-normal'>Prereg:</span>
                     <label
                         htmlFor="prereg"
                         className={`relative block h-6 w-11 rounded-full transition-colors cursor-pointer [-webkit-tap-highlight-color:_transparent] ${settings.prereg === "active" ? "bg-primary" : "bg-gray-300"}`}
@@ -146,7 +146,7 @@ const SettingsComponent = () => {
                 </div>
 
                 <div className='flex items-center gap-4 justify-start sm:justify-center md:justify-center lg:justify-center'>
-                    <span>Onsite:</span>
+                    <span className='font-normal'>Onsite:</span>
                     <label
                         htmlFor="onsite"
                         className={`relative block h-6 w-11 rounded-full transition-colors cursor-pointer [-webkit-tap-highlight-color:_transparent] ${settings.onsite === "active" ? "bg-primary" : "bg-gray-300"}`}

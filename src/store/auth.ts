@@ -16,6 +16,8 @@ type AuthStore = {
   login: (user: User, token: string) => void;
   logout: () => Promise<void>;
   fetchUser: () => Promise<void>;
+  sidebar: string;
+  updateSidebar: (status: string) => void;
 };
 
 export const useAuth = create<AuthStore>()(
@@ -23,6 +25,7 @@ export const useAuth = create<AuthStore>()(
     (set) => ({
       user: null,
       token: null,
+      sidebar: 'true',
       login: (user, token) => set({ user, token }),
       logout: async () => {
         try {
@@ -54,10 +57,13 @@ export const useAuth = create<AuthStore>()(
           // Optional: logout or redirect to login if token is invalid
         }
       },
+      updateSidebar: (status: string) => {
+        set({ sidebar: status });
+      }
     }),
     {
       name: 'auth-storage',
-      partialize: (state) => ({ user: state.user, token: state.token }),
+      partialize: (state) => ({ user: state.user, token: state.token, sidebar: state.sidebar }),
     }
   )
 );

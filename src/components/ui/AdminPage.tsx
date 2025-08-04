@@ -7,7 +7,7 @@ type Props = {
 
 const AdminPage = ({ className, children }: Props) => {
   return (
-    <div className={`${className} w-full`}>
+    <div className={`${className} w-full p-4`}>
       {children}
     </div>
   )

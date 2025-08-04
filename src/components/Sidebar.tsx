@@ -6,7 +6,7 @@ import Button from "./ui/Button";
 import Logo from "./ui/Logo";
 
 type SidebarProps = {
-  open: boolean;
+  open: string;
   onClose: () => void;
   items: NavItem[];
 };
@@ -19,9 +19,9 @@ export function Sidebar({ open, onClose, items }: SidebarProps) {
       {/* Backdrop for mobile */}
       <div
         className={`fixed inset-0 z-50 bg-black/40 transition-opacity md:hidden ${
-          open ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"
+          open === 'true' ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"
         }`}
-        aria-hidden={!open}
+        aria-hidden={open === 'false'}
         onClick={onClose}
       />
 
@@ -29,10 +29,10 @@ export function Sidebar({ open, onClose, items }: SidebarProps) {
       <aside
         id="app-sidebar"
         className={`fixed inset-y-0 left-0 z-50 w-72 transform bg-pearl shadow-xl transition-transform
-                    md:static md:translate-x-0 md:shadow-none
+                    ${open === 'true' && ""} md:shadow-none
                     dark:bg-slate-900 dark:text-slate-100
                     flex h-full flex-col overflow-hidden border-r
-                    ${open ? "translate-x-0" : "-translate-x-full"}`}
+                    ${open === 'true' ? "translate-x-0" : "-translate-x-full"}`}
         aria-label="Sidebar"
       >
         {/* Sidebar header (non-scrolling) */}
@@ -40,7 +40,7 @@ export function Sidebar({ open, onClose, items }: SidebarProps) {
           {/* <div className="h-9 w-9 rounded-xl bg-indigo-600" /> */}
           <span className="font-semibold text-lg text-center w-full">AGMA 2025</span>
           <button
-            className="ml-auto md:hidden inline-flex items-center justify-center rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800"
+            className="ml-auto inline-flex items-center justify-center rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800"
             onClick={onClose}
             aria-label="Close sidebar"
           >

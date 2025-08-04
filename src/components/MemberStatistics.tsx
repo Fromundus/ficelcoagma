@@ -92,13 +92,13 @@ const MemberStatistics: React.FC = () => {
           <SettingsComponent />
           
           <Card childrenClassName='p-6'>
-            <div className='flex items-center justify-between mb-8'>
+            <div className='flex flex-wrap gap-4 items-center justify-between mb-8'>
               <span className='font-semibold'>Registration Trend</span>
               <div className="flex">
-                <Button className={`rounded-l-lg text-xs px-4 rounded-none border-r-0 ${chartType === "daily" ? "bg-primary text-white" : "bg-white text-primary"}`} onClick={() => setChartType('daily')}>
+                <Button className={`rounded-l-lg text-xs rounded-none border-r-0 h-8 ${chartType === "daily" ? "bg-primary text-white" : "bg-white text-primary"}`} onClick={() => setChartType('daily')}>
                   Daily
                 </Button>
-                <Button className={`rounded-r-lg text-xs px-4 rounded-none border-l-0 ${chartType === "monthly" ? "bg-primary text-white" : "bg-white text-primary"}`} onClick={() => setChartType('monthly')}>
+                <Button className={`rounded-r-lg text-xs rounded-none border-l-0 h-8 ${chartType === "monthly" ? "bg-primary text-white" : "bg-white text-primary"}`} onClick={() => setChartType('monthly')}>
                   Monthly
                 </Button>
               </div>
@@ -108,7 +108,7 @@ const MemberStatistics: React.FC = () => {
               <ResponsiveContainer width="100%" height="100%">
                 <LineChart
                   data={chartType === 'daily' ? stats.daily_registrations : stats.monthly_registrations}
-                  margin={{ right: 30, bottom: 10 }}
+                  margin={{ right: 30, bottom: 10, left: -20 }}
                 >
                   <CartesianGrid stroke="#dddddd" strokeDasharray="5 5" />
                   <XAxis dataKey={chartType === 'daily' ? 'date' : 'month'} tickMargin={20} fontSize={12} />

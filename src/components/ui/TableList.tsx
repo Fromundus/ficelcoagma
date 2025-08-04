@@ -4,13 +4,14 @@ import Button from './Button';
 import { useNavigate } from 'react-router-dom';
 import { IoAdd, IoClose } from 'react-icons/io5';
 import api from '../../api/axios';
-import { HiOutlineDotsHorizontal } from 'react-icons/hi';
+// import { HiOutlineDotsHorizontal } from 'react-icons/hi';
 import AdminPage from './AdminPage';
 import { Input } from './Input';
 import { FaFileCsv, FaFileExcel, FaFilePdf } from 'react-icons/fa6';
 import ipconfig from '../../ipconfig';
 import { TbFileTypeSql } from 'react-icons/tb';
 import { format } from 'date-fns';
+import { useAuth } from '../../store/auth';
 
 interface TableListProps {
   onRefresh?: () => void;
@@ -23,11 +24,13 @@ const TableList: React.FC<TableListProps> = ({
   const [loading, setLoading] = useState(false);
   const [list, setList] = useState<RegisteredMember[]>([]);
   // const [selectedItems, setSelectedItems] = useState<string[]>([]);
-  const [openDropdownId, setOpenDropdownId] = useState<string | null>(null);
+  // const [openDropdownId, setOpenDropdownId] = useState<string | null>(null);
   const [currentPage, setCurrentPage] = useState(1);
   const [lastPage, setLastPage] = useState(1);
   const [search, setSearch] = useState('');
   const [searchInput, setSearchInput] = useState('');
+
+  const { sidebar } = useAuth();
 
   const navigate = useNavigate();
 
@@ -77,16 +80,16 @@ const TableList: React.FC<TableListProps> = ({
   //   }
   // };
 
-  const toggleDropdown = (id: string) => {
-    setOpenDropdownId(prev => (prev === id ? null : id));
-  };
+  // const toggleDropdown = (id: string) => {
+  //   setOpenDropdownId(prev => (prev === id ? null : id));
+  // };
 
-  const handleAction = (type: string, member: RegisteredMember) => {
-    if (type === 'edit') {
-      navigate(`${member.account_number}`);
-    }
-    setOpenDropdownId(null);
-  };
+  // const handleAction = (type: string, member: RegisteredMember) => {
+  //   if (type === 'edit') {
+  //     navigate(`${member.account_number}`);
+  //   }
+  //   setOpenDropdownId(null);
+  // };
 
   const handlePageChange = (page: number) => {
     if (page >= 1 && page <= lastPage) {
@@ -161,53 +164,55 @@ const TableList: React.FC<TableListProps> = ({
 
 
   return (
-    <div className="flex flex-col gap-4">
-      <form onSubmit={handleSearch} className='flex flex-col bg-white z-10 items-center gap-2 fixed top-16 p-4 right-0 left-0 md:left-72 lg:left-72'>
-        <div className='flex items-center gap-2 w-full relative'>
-          <Input
-            onChange={(e) => setSearchInput(e.target.value)}
-            value={searchInput}
-            className='text-sm pe-10'
-            placeholder="Search by name, book, or account number"
-          />
-          <IoClose className='text-xl cursor-pointer absolute right-24' onClick={() => {
-            setSearchInput("");
-            setSearch("");
-          }} />
-          <Button className="bg-primary text-white" type="submit" disabled={loading}>Search</Button>
-        </div>
-        <div className='flex items-center gap-2 w-full justify-between mt-2'>
-          <div className='flex items-center gap-2'>
-            <Button className='bg-primary text-white' onClick={() => navigate('/admin/member-registration')}>
-              <IoAdd className='text-lg' />
-            </Button>
-            {/* <Button
-              className='bg-red-500 text-white'
-              onClick={handleDeleteSelected}
-              disabled={selectedItems.length === 0}
-            >
-              <IoTrash className='text-lg' />
-            </Button> */}
+    <div className="flex flex-col gap-4 p-4">
+      <div className={`fixed top-16 z-10 bg-white right-0 p-4 ${sidebar === "true" ? "left-0 md:left-72 lg:left-72" : "left-0"}`}>
+        <form onSubmit={handleSearch} className='flex flex-col items-center gap-2 mx-auto h-full w-full'>
+          <div className='flex items-center gap-2 w-full relative'>
+            <Input
+              onChange={(e) => setSearchInput(e.target.value)}
+              value={searchInput}
+              className='text-sm pe-10'
+              placeholder="Search by name, book, or account number"
+            />
+            <IoClose className='text-xl cursor-pointer absolute right-24' onClick={() => {
+              setSearchInput("");
+              setSearch("");
+            }} />
+            <Button className="bg-primary text-white" type="submit" disabled={loading}>Search</Button>
           </div>
-          <div className='flex items-center gap-2'>
-            <Button className='bg-red-500 text-white' onClick={() => handleDownload('pdf')}>
-              <FaFilePdf className='text-lg' />
-            </Button>
-            <Button className='bg-blue-500 text-white' onClick={() => handleDownload('csv')}>
-              <FaFileCsv className='text-lg' />
-            </Button>
-            <Button className='bg-green-500 text-white' onClick={() => handleDownload('xlsx')}>
-              <FaFileExcel className='text-lg' />
-            </Button>
-            <Button className='bg-pink-500 text-white' onClick={() => handleDownload('sql')}>
-              <TbFileTypeSql className='text-xl' />
-            </Button>
+          <div className='flex items-center gap-2 w-full justify-between mt-2'>
+            <div className='flex items-center gap-2'>
+              <Button className='bg-primary text-white' onClick={() => navigate('/admin/member-registration')}>
+                <IoAdd className='text-lg' />
+              </Button>
+              {/* <Button
+                className='bg-red-500 text-white'
+                onClick={handleDeleteSelected}
+                disabled={selectedItems.length === 0}
+              >
+                <IoTrash className='text-lg' />
+              </Button> */}
+            </div>
+            <div className='flex items-center gap-2'>
+              <Button className='bg-red-500 text-white' onClick={() => handleDownload('pdf')}>
+                <FaFilePdf className='text-lg' />
+              </Button>
+              <Button className='bg-blue-500 text-white' onClick={() => handleDownload('csv')}>
+                <FaFileCsv className='text-lg' />
+              </Button>
+              <Button className='bg-green-500 text-white' onClick={() => handleDownload('xlsx')}>
+                <FaFileExcel className='text-lg' />
+              </Button>
+              <Button className='bg-pink-500 text-white' onClick={() => handleDownload('sql')}>
+                <TbFileTypeSql className='text-xl' />
+              </Button>
+            </div>
           </div>
-        </div>
-      </form>
+        </form>
+      </div>
 
 
-      <div className='border mt-[120px]' style={{ zIndex: 0 }}>
+      <div className='border overflow-x-auto mt-[120px]' style={{ zIndex: 0 }}>
         <table className="min-w-full divide-y">
           <thead className="bg-gray-100">
             <tr>
@@ -222,8 +227,8 @@ const TableList: React.FC<TableListProps> = ({
               <td className="px-2 py-4 text-left text-xs font-medium uppercase">Account Number</td>
               <td className="px-2 py-4 text-left text-xs font-medium uppercase">Book</td>
               <td className="px-2 py-4 text-left text-xs font-medium uppercase">Name</td>
-              <td className="px-2 py-4 text-left text-xs font-medium uppercase">Occupant</td>
               <td className="px-2 py-4 text-left text-xs font-medium uppercase">Address</td>
+              <td className="px-2 py-4 text-left text-xs font-medium uppercase">Occupant</td>
               <td className="px-2 py-4 text-left text-xs font-medium uppercase">Date & Time</td>
               <td className="px-2 py-4 text-left text-xs font-medium uppercase">Type of Registration</td>
               {/* <td className="px-2 py-4 text-left text-xs font-medium uppercase">Action</td> */}
@@ -243,8 +248,8 @@ const TableList: React.FC<TableListProps> = ({
                 <td className="px-2 py-4 text-xs">{item.account_number}</td>
                 <td className="px-2 py-4 text-xs">{item.book}</td>
                 <td className="px-2 py-4 text-xs">{item.name}</td>
-                <td className="px-2 py-4 text-xs">{item.occupant}</td>
                 <td className="px-2 py-4 text-xs">{item.address}</td>
+                <td className="px-2 py-4 text-xs">{item.occupant}</td>
                 <td className="px-2 py-4 text-xs">{item.created_at ? format(new Date(item.created_at), 'PPpp') : '—'}</td>
                 <td className="px-2 py-4 text-xs">{item.registration_method}</td>
                 {/* <td className="px-2 py-4 relative">

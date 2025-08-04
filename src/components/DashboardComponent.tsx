@@ -4,14 +4,14 @@ import { Header } from './Header'
 import { Outlet } from 'react-router-dom'
 import { useLocation, useResolvedPath } from "react-router-dom";
 import type { NavItem } from '../types/NavItem';
+import { useAuth } from '../store/auth';
 
 type Props = {
   navItems: NavItem[];
 }
 
 const DashboardComponent = ({ navItems } : Props) => {
-  const [sidebarOpen, setSidebarOpen] = React.useState(false);
-
+  const { sidebar, updateSidebar } = useAuth();
 
   function useHeaderLabel(items: NavItem[]) {
     const { pathname } = useLocation();
@@ -44,19 +44,19 @@ const DashboardComponent = ({ navItems } : Props) => {
 
   return (
     <div className="h-screen w-full">
-      <div className="relative flex h-full">
+      <div className="relative h-full">
         {/* Sidebar (off-canvas on mobile, static on desktop) */}
         <div className='z-1'>
-          <Sidebar open={sidebarOpen} onClose={() => setSidebarOpen(false)} items={navItems} />
+          <Sidebar open={sidebar} onClose={() => updateSidebar('false')} items={navItems} />
         </div>
 
         <div className="flex min-h-0 flex-1 flex-col">
           {/* This is the MAIN SCROLL AREA */}
           <div className="flex min-h-0 flex-1 flex-col overflow-y-auto">
-            <Header title={useHeaderLabel(navItems)} onOpenSidebar={() => setSidebarOpen(true)} />
+            <Header open={sidebar} title={useHeaderLabel(navItems)} onOpenSidebar={() => updateSidebar('true')} />
 
             {/* MAIN CONTENT */}
-            <main className="mx-auto w-full max-w-7xl flex-1 p-4 mt-16 z-2">
+            <main className={`${sidebar === 'true' && "md:ml-72 lg:ml-72"} flex-1 mt-16 z-2`}>
               <Outlet />
             </main>
           </div>
