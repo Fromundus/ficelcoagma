@@ -1,4 +1,4 @@
-import logo from "../../assets/agma-header.jfif";
+import logo from "../../assets/agma-banner.jfif";
 
 const Logo = ({ className } : { className?: string }) => {
   return (
