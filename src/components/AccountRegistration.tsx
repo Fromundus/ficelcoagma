@@ -132,7 +132,7 @@ const AccountRegistration = ({ role }: { role?: string }) => {
         setData((prev) => {
             return {
             ...prev,
-            [name]: value
+            [name]: (name === "account_number" || name === "book") ? value.toUpperCase() : value,
             }
         })
     }
@@ -302,7 +302,7 @@ const AccountRegistration = ({ role }: { role?: string }) => {
         }
     }
 
-    // console.log(data);
+    console.log(data);
 
     return (
         <>
@@ -343,6 +343,7 @@ const AccountRegistration = ({ role }: { role?: string }) => {
                     </div>}
                     <Form onSubmit={handleSubmit}>
                         <Input
+                            className='uppercase'
                             id='account_number'
                             name='account_number'
                             label='Account Number'
@@ -356,6 +357,7 @@ const AccountRegistration = ({ role }: { role?: string }) => {
                             maxLength={8}
                         />
                         <Input
+                            className='uppercase'
                             id='book'
                             name='book'
                             label='Sequence (First 6 Characters)'
@@ -385,6 +387,7 @@ const AccountRegistration = ({ role }: { role?: string }) => {
                     <Form onSubmit={handleSubmitComplete}>
                         <div className={`grid grid-cols-1 ${role && "lg:grid-cols-2"} gap-4`}>
                             <Input
+                                className='uppercase'
                                 id='account_number'
                                 name='account_number'
                                 label='Account Number'
@@ -398,6 +401,7 @@ const AccountRegistration = ({ role }: { role?: string }) => {
                                 maxLength={8}
                             />
                             <Input
+                                className='uppercase'
                                 id='book'
                                 name='book'
                                 label='Sequence'
