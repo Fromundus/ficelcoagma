@@ -16,7 +16,6 @@ import Button from './ui/Button';
 import type { RegisteredMember } from '../types/RegisteredMember';
 import { useNavigate } from 'react-router-dom';
 import TableDisplay from './ui/TableListDisplay';
-import SettingsComponent from './SettingsComponent';
 
 type ChartDataPoint = {
   date?: string;   // for daily
