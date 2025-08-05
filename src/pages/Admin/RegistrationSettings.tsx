@@ -3,7 +3,7 @@ import AdminPage from '../../components/ui/AdminPage'
 
 const RegistrationSettings = () => {
   return (
-    <AdminPage className='flex items-center justify-center min-h-[80vh]'>
+    <AdminPage className='min-h-[100vh]'>
         <SettingsComponent />
     </AdminPage>
   )
