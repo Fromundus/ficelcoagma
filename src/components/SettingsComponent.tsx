@@ -4,6 +4,7 @@ import Card from './ui/Card';
 import pushToast from '../lib/toast';
 import Button from './ui/Button';
 import { format } from 'date-fns';
+import AdminPage from './ui/AdminPage';
 
 type Settings = {
     online: string;
@@ -89,16 +90,16 @@ const SettingsComponent = () => {
     const renderLogs = logs?.map((item: Log) => {
         return (
             <div key={item.id}>
-                <span className='text-xs'><span className='font-medium'>[{format(new Date(item.created_at), 'PPpp')}]</span> {item.fullname} {item.description}</span>
+                <span className='text-xs'><span className='font-semibold'>[{format(new Date(item.created_at), 'PPpp')}]</span> {item.fullname} {item.description}</span>
             </div>
         )
     });
 
     if(loading){
         return (
-            <Card className='w-full text-center' childrenClassName='p-6'>
+            <AdminPage className='flex items-center justify-center min-h-[80vh]'>
                 <span>Loading...</span>
-            </Card>
+            </AdminPage>
         )
     }
 
@@ -160,12 +161,17 @@ const SettingsComponent = () => {
                 </div>
             </div>}>
             
-            {logs.length && logs.length > 0 && <div className='flex flex-col gap-2'>
-                <span className='font-semibold'>Logs</span>
+            <span className='font-semibold'>Logs</span>
+            {logs.length > 0 ? <div className='flex flex-col gap-2'>
                 <div className='flex flex-col'>
                     {renderLogs}
                 </div>
-            </div>}
+            </div>
+            :
+            <div>
+                <span className='text-xs'>No recent logs.</span>
+            </div>
+            }
         </Card>
     )
 }

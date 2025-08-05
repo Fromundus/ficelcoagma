@@ -38,7 +38,7 @@ export function Sidebar({ open, onClose, items }: SidebarProps) {
         {/* Sidebar header (non-scrolling) */}
         <div className="flex h-16 items-center gap-2 px-4 border-b shrink-0">
           {/* <div className="h-9 w-9 rounded-xl bg-indigo-600" /> */}
-          <span className="font-semibold text-lg text-center w-full">AGMA 2025</span>
+          <span className="font-semibold text-lg text-center w-full">FICELCO AGMA 2025</span>
           <button
             className="ml-auto inline-flex items-center justify-center rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800"
             onClick={onClose}

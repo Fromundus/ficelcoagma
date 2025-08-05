@@ -100,10 +100,10 @@ const AccountSettings = () => {
             placeholder='Username'
             onChange={handleChange}
             value={userAccount.name}
-            disabled={user?.role !== "admin" || loading}
-            withExistingData={user?.role !== "admin"}
+            disabled={user?.role !== "superadmin" || loading}
+            withExistingData={user?.role !== "superadmin"}
             error={errors?.name}
-            readOnly={user?.role !== "admin"}
+            readOnly={user?.role !== "superadmin"}
           />
 
           <Input
@@ -113,10 +113,10 @@ const AccountSettings = () => {
             placeholder='Full Name'
             onChange={handleChange}
             value={userAccount.fullname}
-            disabled={user?.role !== "admin" || loading}
-            withExistingData={user?.role !== "admin"}
+            disabled={user?.role !== "superadmin" || loading}
+            withExistingData={user?.role !== "superadmin"}
             error={errors?.fullname}
-            readOnly={user?.role !== "admin"}
+            readOnly={user?.role !== "superadmin"}
           />
 
           {/* <Input
@@ -132,7 +132,7 @@ const AccountSettings = () => {
             error={errors?.email}
           /> */}
 
-          {user?.role === "admin" && <Button className='bg-primary text-white' loading={loading} disabled={loading}>
+          {user?.role === "superadmin" && <Button className='bg-primary text-white' loading={loading} disabled={loading}>
             Update
           </Button>}
         </Form>

@@ -6,13 +6,15 @@ type Props = {
     children: React.ReactNode;
     className?: string;
     title: string;
+    titleClassName?: string;
     withClose?: boolean;
     popUp: boolean;
     setPopUp: React.Dispatch<React.SetStateAction<boolean>>;
     loading?: boolean;
+    popUpClassName?: string;
 }
 
-const PopUp = ({ children, className, title, withClose, popUp, setPopUp, loading }: Props) => {
+const PopUp = ({ children, className, title, withClose, popUp, setPopUp, loading, titleClassName, popUpClassName }: Props) => {
   return (
     <>
         {popUp && <div
@@ -26,13 +28,13 @@ const PopUp = ({ children, className, title, withClose, popUp, setPopUp, loading
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: -20 }}
                     transition={{ duration: 0.3 }}
-                    className="bg-white rounded-2xl shadow-xl max-w-xl w-full relative border border-border
+                    className={`bg-white rounded-2xl shadow-xl max-w-xl w-full relative border border-border
                 /* Make the panel scroll instead of the overlay */
-                max-h-[90dvh] overflow-y-auto"
+                max-h-[90dvh] overflow-y-auto ${popUpClassName}`}
                     onClick={(e) => e.stopPropagation()}
                 >
                     <div className='flex items-center justify-center w-full relative p-6 border-b border-border'>
-                        <span className='font-semibold text-lg text-center'>{title}</span>
+                        <span className={`font-semibold text-lg text-center ${titleClassName}`}>{title}</span>
                         {withClose && <button
                             className="absolute right-4 p-2 border rounded-lg hover:bg-pearl"
                             disabled={loading}

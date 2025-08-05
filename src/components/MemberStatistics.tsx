@@ -89,7 +89,7 @@ const MemberStatistics: React.FC = () => {
               </div>
           </div>
 
-          <SettingsComponent />
+          {/* <SettingsComponent /> */}
           
           <Card childrenClassName='p-6'>
             <div className='flex flex-wrap gap-4 items-center justify-between mb-8'>

@@ -306,14 +306,13 @@ const AccountRegistration = ({ role }: { role?: string }) => {
 
     return (
         <>
-            {!role && <PopUp title="WELCOME TO FICELCO'S AGMA 2025 ONLINE REGISTRATION" popUp={popUp} setPopUp={setPopUp}>
-                <div className='flex flex-col gap-6'>
+            {!role && <PopUp titleClassName='text-sm' title="WELCOME TO FICELCO'S AGMA 2025 ONLINE REGISTRATION" popUp={popUp} setPopUp={setPopUp} popUpClassName='overflow-y-hidden'>
+                <div className='flex flex-col gap-4'>
                     <div className='w-full flex justify-center'>
                         <Logo className='w-full' />
                     </div>
-                    <p>To continue, you must agree to our data privacy policy.</p>
-                    <div className="w-full h-96 overflow-auto p-4 bg-white border border-gray-300 rounded text-sm text-graphite space-y-6">
-                        <span className='font-bold text-primary text-lg'>Data Privacy Policy</span>
+                    <p>To continue, you must agree to our data <strong>PRIVACY POLICY</strong>.</p>
+                    <div className="w-full h-20 overflow-auto p-4 bg-white border border-gray-300 rounded text-sm text-graphite space-y-4">
                         <p>The Annual General Membership Assembly (AGMA) allows our Member-Consumers-Owners (MCOs) significant information regarding the Institutional and Technical highlights of the Cooperative for the calendar year 2025. By registering, you are assured of a slot in the <strong>RAFFLE DRAW</strong> and cound win exciting prizes.</p>
 
                         <p>FICELCO respects the privacy rights of our MCO's. By filling-out this form, you expressly consent to the processing of your personal and /or sensitive personal information for the purpose of FICELCO 2025 AGMA Registration. All collected information in this form will be stored and accessed with the outmost confidentiality in accordance with the Data Privacy Act of 2012.</p>    

@@ -31,11 +31,22 @@ type Errors = {
   role: string;
 }
 
-const roleOptions = [
+const superAdminRoleOptions = [
+  {
+    id: "superadmin",
+    name: "Super Admin",
+  },
   {
     id: "admin",
     name: "Admin",
   },
+    {
+    id: "user",
+    name: "User",
+  },
+];
+
+const adminRoleOptions = [
     {
     id: "user",
     name: "User",
@@ -52,6 +63,8 @@ const AccountsTableList: React.FC<TableListProps> = ({ onRefresh }) => {
   const [lastPage, setLastPage] = useState(1);
   const [search, setSearch] = useState('');
   const [searchInput, setSearchInput] = useState('');
+
+  const { user } = useAuth();
 
   const { sidebar } = useAuth();
 
@@ -292,7 +305,7 @@ const AccountsTableList: React.FC<TableListProps> = ({ onRefresh }) => {
                     name='role'
                     label='Role'
                     placeholder='Please Select a Role'
-                    options={roleOptions} 
+                    options={user?.role === 'superadmin' ? superAdminRoleOptions : adminRoleOptions} 
                     onChange={handleChange} 
                     value={newUser.role}
                     loading={loading}
@@ -401,7 +414,7 @@ const AccountsTableList: React.FC<TableListProps> = ({ onRefresh }) => {
                       >
                         Edit
                       </button> */}
-                        <Edit user={item} fetchData={fetchData} setOpenDropdownId={setOpenDropdownId} />
+                        <Edit item={item} fetchData={fetchData} setOpenDropdownId={setOpenDropdownId} />
                     </div>
                   )}
                 </td>
@@ -409,7 +422,7 @@ const AccountsTableList: React.FC<TableListProps> = ({ onRefresh }) => {
             ))}
             {list.length === 0 && (
               <tr>
-                <td colSpan={5} className="p-4 text-center text-gray-500">
+                <td colSpan={6} className="p-4 text-center text-gray-500">
                   No items found.
                 </td>
               </tr>
@@ -443,12 +456,13 @@ const AccountsTableList: React.FC<TableListProps> = ({ onRefresh }) => {
 
 export default AccountsTableList;
 
-const Edit = ({user, fetchData, setOpenDropdownId}: {user: User, fetchData: () => void, setOpenDropdownId: React.Dispatch<React.SetStateAction<number | null | undefined>>}) => {
+const Edit = ({item, fetchData, setOpenDropdownId}: {item: User, fetchData: () => void, setOpenDropdownId: React.Dispatch<React.SetStateAction<number | null | undefined>>}) => {
+  const { user } = useAuth();
   const [loading, setLoading] = React.useState<boolean>(false);
   const [newUser, setNewUser] = React.useState<User>({
-    name: user.name ?? "",
-    fullname: user.fullname ?? "",
-    role: user.role ?? "",
+    name: item.name ?? "",
+    fullname: item.fullname ?? "",
+    role: item.role ?? "",
   });
 
   const [errors, setErrors] = React.useState<Errors | null>({
@@ -474,7 +488,7 @@ const Edit = ({user, fetchData, setOpenDropdownId}: {user: User, fetchData: () =
     setLoading(true);
 
     try {
-      const res = await api.put(`/updateuser/${user.id}`, newUser);
+      const res = await api.put(`/updateuser/${item.id}`, newUser);
       console.log(res);
       pushToast("Created Successfully");
       fetchData();
@@ -488,7 +502,7 @@ const Edit = ({user, fetchData, setOpenDropdownId}: {user: User, fetchData: () =
   };
 
   return (
-    <Modal title={`Update ${user.name}`} buttonClassName='border-0 hover:bg-gray-100 w-full text-xs font-normal h-8' label={"Edit"}>
+    <Modal title={`Update ${item.name}`} buttonClassName='border-0 hover:bg-gray-100 w-full text-xs font-normal h-8' label={"Edit"}>
       <div className='flex flex-col gap-4'>
         <Input 
           id='name'
@@ -519,7 +533,7 @@ const Edit = ({user, fetchData, setOpenDropdownId}: {user: User, fetchData: () =
           name='role'
           label='Role'
           placeholder='Please Select a Role'
-          options={roleOptions} 
+          options={user?.role === 'superadmin' ? superAdminRoleOptions : adminRoleOptions} 
           onChange={handleChange} 
           value={newUser.role}
           loading={loading}

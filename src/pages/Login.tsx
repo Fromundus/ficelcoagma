@@ -10,15 +10,15 @@ import Logo from '../components/ui/Logo';
 
 type Props = {
   title: string; 
-  required_settings: 'prereg' | 'onsite' | 'admin'; 
-  required_role: 'user' | 'admin';
+  required_settings: 'prereg' | 'onsite' | 'admin' | 'superadmin'; 
+  required_role: 'user' | 'admin' | 'superadmin';
 }
 
 type LoginData = {
   name: string;
   password: string;
-  required_settings?: 'prereg' | 'onsite' | 'admin';
-  required_role?: 'user' | 'admin';
+  required_settings?: 'prereg' | 'onsite' | 'admin' | 'superadmin';
+  required_role?: 'user' | 'admin' | 'superadmin';
 }
 
 export default function Login({ title, required_settings, required_role }: Props) {
