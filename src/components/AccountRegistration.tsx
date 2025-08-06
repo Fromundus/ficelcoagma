@@ -184,7 +184,7 @@ const AccountRegistration = ({ role }: { role?: string }) => {
                 });
             } else if (res.status === 201){
                 if(role){
-                    pushToast("Registration Method Updated.");
+                    pushToast(registrationMethod === "onsite" ? "Registration Method Updated." : "This member is already registered.");
                     setData({
                         account_number: "",
                         book: "",
@@ -324,7 +324,7 @@ const AccountRegistration = ({ role }: { role?: string }) => {
                     <div className='w-full flex justify-center'>
                         <Logo className='w-full' />
                     </div>
-                    <p>To continue, you must agree to our data <strong>PRIVACY POLICY</strong>.</p>
+                    <p>To continue, you must agree to our <strong>DATA PRIVACY POLICY</strong>.</p>
                     <div className="w-full h-20 overflow-auto p-4 bg-white border border-gray-300 rounded text-sm text-graphite space-y-4">
                         <p>The Annual General Membership Assembly (AGMA) allows our Member-Consumers-Owners (MCOs) significant information regarding the Institutional and Technical highlights of the Cooperative for the calendar year 2025. By registering, you are assured of a slot in the <strong>RAFFLE DRAW</strong> and cound win exciting prizes.</p>
 
