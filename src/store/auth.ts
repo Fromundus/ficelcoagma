@@ -38,8 +38,8 @@ export const useAuth = create<AuthStore>()(
         try {
           const res = await api.post('/logout', data);
           console.log(res);
+          set({ user: null, token: null });
           localStorage.removeItem('auth-storage');
-          set({ user: null, token: null, registrationMethod: null });
           window.location.href = `${res.data.loginUrl}`;
         } catch (e) {
           console.error('Logout failed', e);
@@ -58,8 +58,8 @@ export const useAuth = create<AuthStore>()(
         } catch (e: any) {
           console.error('Failed to fetch user:', e);
           if(e?.status === 401 || e?.status === 403){
-            localStorage.removeItem('auth-storage');
             set({ user: null, token: null });
+            localStorage.removeItem('auth-storage');
           }
           // Optional: logout or redirect to login if token is invalid
         }
