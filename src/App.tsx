@@ -44,8 +44,8 @@ function App() {
 
           <Route path="/prereg" element={<PreRegLogin />} />
           <Route path="/onsite" element={<OnsiteLogin />} />
-          <Route path='/admin-login' element={<Login title='Admin Login' required_settings='admin' required_role='admin' />} />
-          <Route path='/superadmin-login' element={<Login title='Super Admin Login' required_settings='superadmin' required_role='superadmin' />} />
+          <Route path='/admin-login' element={<Login title='Admin Login' required_settings='admin' required_role='admin' registration_method={null} />} />
+          <Route path='/superadmin-login' element={<Login title='Super Admin Login' required_settings='superadmin' required_role='superadmin' registration_method={null} />} />
           <Route path='/online' element={<OnlineRegistration />} />
           
           <Route path='/registered/:reference_number' element={<Registered />} />
@@ -58,7 +58,7 @@ function App() {
             <Route path='account-settings' element={<AccountSettings />} />
           </Route>
         </Route>
-        
+
         <Route element={<PrivateRoute requiredRole="admin" />} >
           <Route path='admin' element={<AdminLayout />} >
             <Route index element={<Dashboard />} />

@@ -58,7 +58,7 @@ type ValidatedData = {
 }
 
 const AccountRegistration = ({ role }: { role?: string }) => {
-    const { user } = useAuth();
+    const { user, registrationMethod } = useAuth();
     const [validated, setValidated] = React.useState<boolean>(false);
     const [consentGiven, setConsentGiven] = React.useState<boolean>(false);
     const [popUp, setPopUp] = React.useState<boolean>(true);
@@ -137,17 +137,18 @@ const AccountRegistration = ({ role }: { role?: string }) => {
         })
     }
 
-    // function methodOfRegistration(role: string | undefined){
-    //     if(role === "admin"){
-    //         return "admin";
-    //     } else if (role === "pre"){
-    //         return "prereg";
-    //     } else if (role === "ons"){
-    //         return "onsite"
-    //     } else {
-    //         return "online"
-    //     }
-    // }
+    function methodOfRegistration(registrationMethod: string | null){
+        if(!role && (!registrationMethod || registrationMethod === null || registrationMethod === undefined || registrationMethod === "")){
+            return "online"
+        } else {
+            if(role === 'admin'){
+                return "prereg"
+            } else {
+                return registrationMethod;
+            }
+        }
+            
+    }
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -156,8 +157,7 @@ const AccountRegistration = ({ role }: { role?: string }) => {
 
         const dataToSend = {
             ...data,
-            role: role ? role : null,
-            // registration_method: methodOfRegistration(role),
+            registration_method: methodOfRegistration(registrationMethod),
         }
 
         try {
@@ -184,7 +184,21 @@ const AccountRegistration = ({ role }: { role?: string }) => {
                 });
             } else if (res.status === 201){
                 if(role){
-                    pushToast("This member is already registered.");
+                    pushToast("Registration Method Updated.");
+                    setData({
+                        account_number: "",
+                        book: "",
+                        name: "",
+                        address: "",
+                        occupant: "",
+                        id_presented: "",
+                        id_number: "",
+                        phone_number: "",
+                        email: "",
+                        created: "",
+                        createdBy: "",
+                        status: "",
+                    });
                 } else {
                     navigate(`/registered/${res.data.data.reference_number}`);
                 }
@@ -222,9 +236,8 @@ const AccountRegistration = ({ role }: { role?: string }) => {
             created: validatedData.created ?? data.created ,
             createdBy: validatedData.createdBy ?? data.createdBy ,
             status: validatedData.status ?? data.status ,
-            // registration_method: methodOfRegistration(role), handled in the backend
+            registration_method: methodOfRegistration(registrationMethod),
             created_by: role ? (user?.fullname)?.toString() : null,
-            role: role ? role : null, // if there is role it will check if prereg or onsite based on settings status, if role is null it will count as online reg
         }
 
         try {
@@ -302,7 +315,7 @@ const AccountRegistration = ({ role }: { role?: string }) => {
         }
     }
 
-    console.log(data);
+    // console.log(data);
 
     return (
         <>

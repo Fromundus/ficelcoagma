@@ -12,7 +12,7 @@ type SidebarProps = {
 };
 
 export function Sidebar({ open, onClose, items }: SidebarProps) {
-  const { user, logout } = useAuth();
+  const { user, logout, registrationMethod } = useAuth();
 
   return (
     <>
@@ -75,7 +75,7 @@ export function Sidebar({ open, onClose, items }: SidebarProps) {
             ))}
           </ul>
 
-          <Button className="bg-primary text-white w-full mt-auto" onClick={logout}>
+          <Button className="bg-primary text-white w-full mt-auto" onClick={() => logout(registrationMethod)}>
             Logout
           </Button>
         </nav>

@@ -12,6 +12,7 @@ type Props = {
   title: string; 
   required_settings: 'prereg' | 'onsite' | 'admin' | 'superadmin'; 
   required_role: 'user' | 'admin' | 'superadmin';
+  registration_method: 'prereg' | 'onsite' | null,
 }
 
 type LoginData = {
@@ -19,20 +20,23 @@ type LoginData = {
   password: string;
   required_settings?: 'prereg' | 'onsite' | 'admin' | 'superadmin';
   required_role?: 'user' | 'admin' | 'superadmin';
+  registration_method: 'prereg' | 'onsite' | null,
 }
 
-export default function Login({ title, required_settings, required_role }: Props) {
+export default function Login({ title, required_settings, required_role, registration_method }: Props) {
   const [loading, setLoading] = useState<boolean>(false);
   const [data, setData] = useState<LoginData>({
     name: "",
     password: "",
     required_settings: required_settings,
     required_role: required_role,
+    registration_method: registration_method
   });
 
   const [errors, setErrors] = useState<null>(null);
 
   const login = useAuth((state) => state.login);
+  const { updateRegistrationMethod } = useAuth();
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setErrors(null);
@@ -55,6 +59,7 @@ export default function Login({ title, required_settings, required_role }: Props
       const res = await api.post('/login', data);
       console.log(res);
       login(res.data.user, res.data.access_token);
+      updateRegistrationMethod(res.data.registration_method);
       setLoading(false);
     } catch (err: any) {
       setErrors(err.response.data.message);

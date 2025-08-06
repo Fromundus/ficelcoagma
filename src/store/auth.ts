@@ -14,10 +14,12 @@ type AuthStore = {
   user: User | null;
   token: string | null;
   login: (user: User, token: string) => void;
-  logout: () => Promise<void>;
+  logout: (registrationMethod: string | null) => Promise<void>;
   fetchUser: () => Promise<void>;
   sidebar: string;
   updateSidebar: (status: string) => void;
+  registrationMethod: string | null;
+  updateRegistrationMethod: (type: string) => void;
 };
 
 export const useAuth = create<AuthStore>()(
@@ -26,13 +28,18 @@ export const useAuth = create<AuthStore>()(
       user: null,
       token: null,
       sidebar: 'true',
+      registrationMethod: null,
       login: (user, token) => set({ user, token }),
-      logout: async () => {
+      logout: async (registrationMethod: string | null) => {
+        const data = {
+          registration_method: registrationMethod,
+        }
+
         try {
-          const res = await api.post('/logout');
+          const res = await api.post('/logout', data);
           console.log(res);
           localStorage.removeItem('auth-storage');
-          set({ user: null, token: null });
+          set({ user: null, token: null, registrationMethod: null });
           window.location.href = `${res.data.loginUrl}`;
         } catch (e) {
           console.error('Logout failed', e);
@@ -59,11 +66,14 @@ export const useAuth = create<AuthStore>()(
       },
       updateSidebar: (status: string) => {
         set({ sidebar: status });
-      }
+      },
+      updateRegistrationMethod: (type: string) => {
+        set({ registrationMethod: type });
+      },
     }),
     {
       name: 'auth-storage',
-      partialize: (state) => ({ user: state.user, token: state.token, sidebar: state.sidebar }),
+      partialize: (state) => ({ user: state.user, token: state.token, sidebar: state.sidebar, registrationMethod: state.registrationMethod }),
     }
   )
 );
