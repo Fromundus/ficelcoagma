@@ -1,6 +1,6 @@
 const validPhilippineIDs = [
   { id: "PASSPORT", name: "Philippine Passport" },
-  { id: "DRIVERS_LICENSE", name: "Driver’s License (LTO)" },
+  { id: "DRIVERS LICENSE", name: "Driver’s License (LTO)" },
   { id: "UMID", name: "Unified Multi-Purpose ID (UMID)" },
   { id: "SSS", name: "Social Security System (SSS) ID" },
   { id: "GSIS", name: "Government Service Insurance System (GSIS) ID" },

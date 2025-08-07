@@ -368,7 +368,7 @@ const AccountRegistration = ({ role }: { role?: string }) => {
         }
     }
 
-    // console.log(data);
+    console.log(data);
 
     return (
         <>
@@ -517,10 +517,10 @@ const AccountRegistration = ({ role }: { role?: string }) => {
                                 error={errors?.occupant}
                             />
 
-                            <Select
+                            {data.id_presented === "" && <Select
                                 id='id_presented'
                                 name='id_presented'
-                                label='Presented ID'
+                                label='Presented ID Options'
                                 placeholder='Please Select an ID'
                                 options={validPhilippineIDs} 
                                 onChange={handleChange} 
@@ -528,6 +528,18 @@ const AccountRegistration = ({ role }: { role?: string }) => {
                                 loading={loading}
                                 disabled={loading || (!role ? !consentGiven : false) || validatedData.id_presented !== null}
                                 withExistingData={validatedData.id_presented !== null}
+                                error={errors?.id_presented}
+                            />}
+
+                            <Input
+                                id='id_presented'
+                                name='id_presented'
+                                label='Presented ID (Please specify if your ID is not in the options)'
+                                placeholder='Presented ID'
+                                onChange={handleChange}
+                                value={data.id_presented}
+                                loading={loading}
+                                disabled={loading || (!role ? !consentGiven : false) || data.id_presented === null}
                                 error={errors?.id_presented}
                             />
 
