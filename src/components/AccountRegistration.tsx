@@ -585,13 +585,16 @@ const AccountRegistration = ({ role }: { role?: string }) => {
                 </Card>}
             </div>
 
-            {errorMessage && <PopUp title={"Error Message"} popUp={memberNotFoundPopUp} setPopUp={setMemberNotFoundPop} withClose={true}>
+            {errorMessage && <PopUp title={errorMessage && errorMessage === "This account is already registered. Would you like to change to onsite registration instead?" ? "Warning Message" : "Error Message"} popUp={memberNotFoundPopUp} setPopUp={setMemberNotFoundPop} withClose={true}>
                 <div className='flex flex-col gap-6'>
                     <p className='text-red-500 text-center'>{errorMessage}</p>
                     <div className='w-full flex items-center gap-4'>
-                        <Button className='w-full bg-white text-black' onClick={() => setMemberNotFoundPop(false)}>
+
+                        {errorMessage && errorMessage !== "This account is already registered. Would you like to change to onsite registration instead?" && <Button className='w-full bg-white text-black' onClick={() => setMemberNotFoundPop(false)}>
                             Close
                         </Button>
+                        }
+
                         {errorMessage && errorMessage === "This account is already registered. Would you like to change to onsite registration instead?" &&
                         <Button 
                             className='w-full bg-primary text-white' 
@@ -599,9 +602,21 @@ const AccountRegistration = ({ role }: { role?: string }) => {
                             loading={loading}
                             disabled={loading}
                         >
-                            Confirm
+                            Yes
                         </Button>
                         }
+
+                        {errorMessage && errorMessage === "This account is already registered. Would you like to change to onsite registration instead?" &&
+                        <Button 
+                            className='w-full bg-white text-black' 
+                            onClick={() => setMemberNotFoundPop(false)}
+                            loading={loading}
+                            disabled={loading}
+                        >
+                            No
+                        </Button>
+                        }
+
                     </div>
                 </div>
             </PopUp>}

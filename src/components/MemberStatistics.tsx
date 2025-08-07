@@ -11,6 +11,10 @@ import {
   YAxis,
   Tooltip,
   ResponsiveContainer,
+  PieChart,
+  Pie,
+  Cell,
+  Legend,
 } from 'recharts';
 import Button from './ui/Button';
 import type { RegisteredMember } from '../types/RegisteredMember';
@@ -30,6 +34,10 @@ type MemberStatsData = {
   recent_registrations: RegisteredMember[];
   daily_registrations: ChartDataPoint[];
   monthly_registrations: ChartDataPoint[];
+  total_registered_members: number;
+  onsite: number;
+  online: number;
+  prereg: number;
 };
 
 const MemberStatistics: React.FC = () => {
@@ -62,6 +70,14 @@ const MemberStatistics: React.FC = () => {
       </AdminPage>
     );
   }
+
+  const COLORS = ['#3b82f6', '#22c55e', '#ef4444'];
+
+  const regTypeData = [
+    { name: 'Online Reg', value: stats?.online},
+    { name: 'Onsite Reg', value: stats?.onsite},
+    { name: 'Pre Reg', value: stats?.prereg},
+  ];
 
   if (!stats) return <div>Failed to load stats.</div>;
 
@@ -118,6 +134,32 @@ const MemberStatistics: React.FC = () => {
               </ResponsiveContainer>
             </div>
           </Card>
+
+          {stats.total_registered_members > 0 && <Card childrenClassName='p-6'>
+            <div className='flex flex-wrap gap-4 items-center justify-between'>
+              <span className='font-semibold'>Registration Method Summary</span>
+            </div> 
+            <ResponsiveContainer width="100%" height={300}>
+              <PieChart>
+                <Pie
+                  data={regTypeData}
+                  dataKey="value"
+                  nameKey="name"
+                  cx="50%"
+                  cy="50%"
+                  outerRadius={100}
+                  fill="#8884d8"
+                  label
+                >
+                  {regTypeData.map((entry, index) => (
+                    <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+                  ))}
+                </Pie>
+                <Tooltip />
+                <Legend />
+              </PieChart>
+            </ResponsiveContainer>
+          </Card>}
 
           <Card title='Recent Registrations' childrenClassName='p-6'>
             <div className='flex flex-col gap-4 items-center w-full'>

@@ -12,9 +12,16 @@ import ipconfig from '../../ipconfig';
 import { TbFileTypeSql } from 'react-icons/tb';
 import { format } from 'date-fns';
 import { useAuth } from '../../store/auth';
+import CountUp from 'react-countup';
 
 interface TableListProps {
   onRefresh?: () => void;
+}
+
+type Stats = {
+  online: number;
+  prereg: number;
+  onsite: number;
 }
 
 const TableList: React.FC<TableListProps> = ({ 
@@ -30,6 +37,8 @@ const TableList: React.FC<TableListProps> = ({
   const [search, setSearch] = useState('');
   const [searchInput, setSearchInput] = useState('');
 
+  const [stats, setStats] = useState<Stats | null>(null);
+
   const { sidebar } = useAuth();
 
   const navigate = useNavigate();
@@ -43,6 +52,7 @@ const TableList: React.FC<TableListProps> = ({
       setList(res.data.data.data);
       setCurrentPage(res.data.data.current_page);
       setLastPage(res.data.data.last_page);
+      setStats(res.data.stats);
       // setSelectedItems([]);
     } catch (err) {
       console.error('Error fetching data:', err);
@@ -212,7 +222,30 @@ const TableList: React.FC<TableListProps> = ({
       </div>
 
 
-      <div className='border overflow-x-auto mt-[120px]' style={{ zIndex: 0 }}>
+
+
+      {stats && <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-[120px]">
+        <div className="bg-blue-50 p-4 rounded-xl border flex flex-col gap-4 shadow-lg">
+            <p className="text-sm text-graphite">Pre Registration</p>
+            <h3 className="text-4xl font-semibold">
+              <CountUp end={stats?.prereg} duration={1} />
+            </h3>
+        </div>
+        <div className="bg-green-50 p-4 rounded-xl border flex flex-col gap-4 shadow-lg">
+            <p className="text-sm text-graphite">Onsite Registration</p>
+            <h3 className="text-4xl font-semibold">
+              <CountUp end={stats?.onsite} duration={1} />
+            </h3>
+        </div>
+        <div className="bg-red-50 p-4 rounded-xl border flex flex-col gap-4 shadow-lg">
+            <p className="text-sm text-graphite">Online Registration</p>
+            <h3 className="text-4xl font-semibold">
+              <CountUp end={stats?.online} duration={1} />
+            </h3>
+        </div>
+      </div>}
+
+      <div className='border overflow-x-auto' style={{ zIndex: 0 }}>
         <table className="min-w-full divide-y">
           <thead className="bg-gray-100">
             <tr>
