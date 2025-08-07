@@ -19,6 +19,7 @@ interface TableListProps {
 }
 
 type Stats = {
+  total: number;
   online: number;
   prereg: number;
   onsite: number;
@@ -224,21 +225,27 @@ const TableList: React.FC<TableListProps> = ({
 
 
 
-      {stats && <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-[120px]">
+      {stats && <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-4 mt-[120px]">
+        <div className="bg-gray-50 p-4 rounded-xl border flex flex-col gap-4 shadow-lg">
+            <p className="text-sm text-graphite">Total Registrations</p>
+            <h3 className="text-4xl font-semibold">
+              <CountUp end={stats?.total} duration={1} />
+            </h3>
+        </div>
         <div className="bg-blue-50 p-4 rounded-xl border flex flex-col gap-4 shadow-lg">
-            <p className="text-sm text-graphite">Pre Registration</p>
+            <p className="text-sm text-graphite">Pre Registrations</p>
             <h3 className="text-4xl font-semibold">
               <CountUp end={stats?.prereg} duration={1} />
             </h3>
         </div>
         <div className="bg-green-50 p-4 rounded-xl border flex flex-col gap-4 shadow-lg">
-            <p className="text-sm text-graphite">Onsite Registration</p>
+            <p className="text-sm text-graphite">Onsite Registrations</p>
             <h3 className="text-4xl font-semibold">
               <CountUp end={stats?.onsite} duration={1} />
             </h3>
         </div>
         <div className="bg-red-50 p-4 rounded-xl border flex flex-col gap-4 shadow-lg">
-            <p className="text-sm text-graphite">Online Registration</p>
+            <p className="text-sm text-graphite">Online Registrations</p>
             <h3 className="text-4xl font-semibold">
               <CountUp end={stats?.online} duration={1} />
             </h3>
