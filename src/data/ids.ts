@@ -20,7 +20,8 @@ const validPhilippineIDs = [
   { id: "IBP", name: "Integrated Bar of the Philippines (IBP) ID" },
   { id: "ACR", name: "Alien Certificate of Registration (ACR I-Card)" },
   { id: "SEAMANS", name: "Seaman’s Book (SIRB)" },
-  { id: "FIREARMS", name: "Firearms License (PNP)" }
+  { id: "FIREARMS", name: "Firearms License (PNP)" },
+  { id: "OTHERS", name: "Others" },
 ];
 
 

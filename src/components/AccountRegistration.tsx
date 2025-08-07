@@ -18,6 +18,7 @@ type FormData = {
     name?: string;
     address?: string;
     occupant?: string;
+    selected_id_presented?: string;
     id_presented?: string;
     id_number?: string;
     phone_number?: string;
@@ -86,6 +87,7 @@ const AccountRegistration = ({ role }: { role?: string }) => {
         name: "",
         address: "",
         occupant: "",
+        selected_id_presented: "",
         id_presented: "",
         id_number: "",
         phone_number: "",
@@ -129,12 +131,33 @@ const AccountRegistration = ({ role }: { role?: string }) => {
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement> | React.ChangeEvent<HTMLSelectElement>) => {
         const { name, value } = e.target;
-        setData((prev) => {
-            return {
-            ...prev,
-            [name]: (name === "account_number" || name === "book") ? value.toUpperCase() : value,
+
+        if(name === "selected_id_presented"){
+            if(value === "OTHERS"){
+                setData((prev) => {
+                    return {
+                        ...prev,
+                        [name]: value,
+                        id_presented: ""
+                    }
+                });
+            } else {
+                setData((prev) => {
+                    return {
+                        ...prev,
+                        [name]: value,
+                        id_presented: value,
+                    }
+                });
             }
-        })
+        } else {
+            setData((prev) => {
+                return {
+                ...prev,
+                [name]: (name === "account_number" || name === "book") ? value.toUpperCase() : value,
+                }
+            })
+        }
     }
 
     function methodOfRegistration(registrationMethod: string | null){
@@ -517,21 +540,20 @@ const AccountRegistration = ({ role }: { role?: string }) => {
                                 error={errors?.occupant}
                             />
 
-                            {data.id_presented === "" && <Select
-                                id='id_presented'
-                                name='id_presented'
+                            <Select
+                                id='selected_id_presented'
+                                name='selected_id_presented'
                                 label='Presented ID Options'
                                 placeholder='Please Select an ID'
                                 options={validPhilippineIDs} 
                                 onChange={handleChange} 
-                                value={data.id_presented}
+                                value={data.selected_id_presented}
                                 loading={loading}
-                                disabled={loading || (!role ? !consentGiven : false) || validatedData.id_presented !== null}
-                                withExistingData={validatedData.id_presented !== null}
+                                disabled={loading || (!role ? !consentGiven : false)}
                                 error={errors?.id_presented}
-                            />}
+                            />
 
-                            <Input
+                            {data.selected_id_presented === "OTHERS" && <Input
                                 id='id_presented'
                                 name='id_presented'
                                 label='Presented ID (Please specify if your ID is not in the options)'
@@ -539,9 +561,9 @@ const AccountRegistration = ({ role }: { role?: string }) => {
                                 onChange={handleChange}
                                 value={data.id_presented}
                                 loading={loading}
-                                disabled={loading || (!role ? !consentGiven : false) || data.id_presented === null}
+                                disabled={loading || (!role ? !consentGiven : false) || validatedData.id_presented !== null}
                                 error={errors?.id_presented}
-                            />
+                            />}
 
                             <Input
                                 id='id_number'
