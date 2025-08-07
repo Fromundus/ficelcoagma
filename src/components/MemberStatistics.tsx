@@ -151,7 +151,7 @@ const MemberStatistics: React.FC = () => {
                   fill="#8884d8"
                   label
                 >
-                  {regTypeData.map((entry, index) => (
+                  {regTypeData.map((_, index) => (
                     <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
                   ))}
                 </Pie>
