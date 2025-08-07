@@ -183,8 +183,8 @@ const AccountRegistration = ({ role }: { role?: string }) => {
                     status: res.data.data.status,
                 });
             } else if (res.status === 201){
-                if(role){
-                    pushToast(registrationMethod === "onsite" ? "Registration Method Updated." : "This member is already registered.");
+                if(role && registrationMethod !== 'onsite'){
+                    pushToast("This member is already registered.");
                     setData({
                         account_number: "",
                         book: "",
@@ -199,6 +199,9 @@ const AccountRegistration = ({ role }: { role?: string }) => {
                         createdBy: "",
                         status: "",
                     });
+                } else if (role && registrationMethod === 'onsite'){
+                    setMemberNotFoundPop(true);
+                    setErrorMessage("This account is already registered. Would you like to change to onsite registration instead?")
                 } else {
                     navigate(`/registered/${res.data.data.reference_number}`);
                 }
@@ -217,6 +220,56 @@ const AccountRegistration = ({ role }: { role?: string }) => {
             }
         }
     }
+
+    const handleConfirmUpdateOnsite = async (e: React.FormEvent) => {
+        e.preventDefault();
+        setLoading(true);
+        setErrors(null);
+
+        const dataToSend = {
+            ...data,
+            registration_method: methodOfRegistration(registrationMethod),
+        }
+
+        try {
+            const res = await api.put(`/logged/member-confirm-update-onsite`, dataToSend);
+            console.log(res);
+            setLoading(false);
+            
+            if(res.status === 200){
+                pushToast("Registration Method Updated.");
+                setData({
+                    account_number: "",
+                    book: "",
+                    name: "",
+                    address: "",
+                    occupant: "",
+                    id_presented: "",
+                    id_number: "",
+                    phone_number: "",
+                    email: "",
+                    created: "",
+                    createdBy: "",
+                    status: "",
+                });
+                setMemberNotFoundPop(false);
+                setErrorMessage("");
+            }
+        } catch (err: any) {
+            console.log(err);
+            setLoading(false);
+            setErrors(err.response.data.message);
+
+            if(err.response.status === 404){
+                setMemberNotFoundPop(true);
+                setErrorMessage(err.response.data.message);
+            } else if (err.response.status === 400){
+                setMemberNotFoundPop(true);
+                setErrorMessage(err.response.data.message);
+            }
+        }
+    }
+
 
     const handleSubmitComplete = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -535,9 +588,21 @@ const AccountRegistration = ({ role }: { role?: string }) => {
             {errorMessage && <PopUp title={"Error Message"} popUp={memberNotFoundPopUp} setPopUp={setMemberNotFoundPop} withClose={true}>
                 <div className='flex flex-col gap-6'>
                     <p className='text-red-500 text-center'>{errorMessage}</p>
-                    <Button className='w-full bg-primary text-white' onClick={() => setMemberNotFoundPop(false)}>
-                        Close
-                    </Button>
+                    <div className='w-full flex items-center gap-4'>
+                        <Button className='w-full bg-white text-black' onClick={() => setMemberNotFoundPop(false)}>
+                            Close
+                        </Button>
+                        {errorMessage && errorMessage === "This account is already registered. Would you like to change to onsite registration instead?" &&
+                        <Button 
+                            className='w-full bg-primary text-white' 
+                            onClick={handleConfirmUpdateOnsite}
+                            loading={loading}
+                            disabled={loading}
+                        >
+                            Confirm
+                        </Button>
+                        }
+                    </div>
                 </div>
             </PopUp>}
         </>
