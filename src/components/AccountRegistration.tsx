@@ -391,7 +391,7 @@ const AccountRegistration = ({ role }: { role?: string }) => {
         }
     }
 
-    console.log(data);
+    // console.log(data);
 
     return (
         <>
@@ -445,7 +445,7 @@ const AccountRegistration = ({ role }: { role?: string }) => {
                             minLength={8}
                             maxLength={8}
                         />
-                        <Input
+                        {!role && <Input
                             className='uppercase'
                             id='book'
                             name='book'
@@ -458,11 +458,11 @@ const AccountRegistration = ({ role }: { role?: string }) => {
                             error={errors?.book}
                             minLength={6}
                             maxLength={6}
-                        />
+                        />}
                         <Button
                             className='bg-primary text-white'
                             loading={loading}
-                            disabled={loading || !data.account_number || !data.book || (!role ? !consentGiven : false)}
+                            disabled={loading || !data.account_number || (!role && !data.book) || (!role ? !consentGiven : false)}
                         >
                             Validate
                         </Button>
