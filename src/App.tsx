@@ -54,7 +54,8 @@ function App() {
 
         <Route element={<PrivateRoute requiredRole="user" />} >
           <Route path='user' element={<UserLayout />} >
-            <Route index element={<MemberRegistration />} />
+            <Route index element={<Dashboard />} />
+            <Route path='member-registration' element={<MemberRegistration />} />
             <Route path='account-settings' element={<AccountSettings />} />
           </Route>
         </Route>

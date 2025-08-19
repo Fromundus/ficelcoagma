@@ -3,8 +3,17 @@ import type { NavItem } from "../types/NavItem"
 
 export const userNavItems: NavItem[] = [
     {
-        label: "Member Registration",
+        label: "Dashboard",
         href: "/user",
+        icon: (
+        <div className='text-xl'>
+            <LuLayoutDashboard />
+        </div>
+        ),
+    },
+    {
+        label: "Member Registration",
+        href: "member-registration",
         icon: (
         <div className='text-xl'>
             <LuUserPlus />

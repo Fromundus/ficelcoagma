@@ -20,6 +20,7 @@ import Button from './ui/Button';
 import type { RegisteredMember } from '../types/RegisteredMember';
 import { useNavigate } from 'react-router-dom';
 import TableDisplay from './ui/TableListDisplay';
+import { useAuth } from '../store/auth';
 
 type ChartDataPoint = {
   date?: string;   // for daily
@@ -44,6 +45,7 @@ const MemberStatistics: React.FC = () => {
   const [chartType, setChartType] = useState<'daily' | 'monthly'>('daily');
   const [stats, setStats] = useState<MemberStatsData | null>(null);
   const [loading, setLoading] = useState(true);
+  const { user } = useAuth();
 
   const navigate = useNavigate();
 
@@ -165,9 +167,9 @@ const MemberStatistics: React.FC = () => {
             <div className='flex flex-col gap-4 items-center w-full'>
               {stats.recent_registrations.length > 0 ? <TableDisplay list={stats.recent_registrations} /> : <span>No recent registrations.</span>}
 
-              <Button className='bg-primary text-white' onClick={() => navigate('/admin/registered-members')}>
+              {user?.role === "admin" && <Button className='bg-primary text-white' onClick={() => navigate('/admin/registered-members')}>
                 See All
-              </Button>
+              </Button>}
             </div>
 
           </Card>
